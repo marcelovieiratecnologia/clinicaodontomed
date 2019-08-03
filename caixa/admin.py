@@ -34,6 +34,7 @@ class EntradaSaidaAdmin(admin.ModelAdmin):
 		save_on_top = True # Colocando os botões no topo da página tb
 		radio_fields = {'tp_entrada': admin.HORIZONTAL} # assim o tp_entrada agora aparece não mais em um combobox mas sim como um radiobutton
 		#prepopulated_fields = {'dt_movimentacao': (date.today())}  .... tentando já preé preencher com a data do dia , tentar fazer isso.
+		show_full_result_count = True # Mostra um Contador da pesquisa, numero do que achou
 		
 # Exemplo para registrar um modelo junto ao admin
 admin.site.register(EntradaSaida, EntradaSaidaAdmin)
