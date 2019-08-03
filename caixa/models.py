@@ -87,7 +87,9 @@ class EntradaSaida(models.Model):
 				ordering = ['dt_movimentacao']
 		
 		def __str__(self):
-				return 'Movimentação de: ' #.self.tp_entrada
+				data = self.dt_movimentacao.strftime('%d/%m/%Y') # formatando a data
+				texto = self.tp_entrada + ' de R$ ' + str(self.valor_entr_saida) + ' , Data do Movimento de: ' + data
+				return texto
 		
 		#Validações
 		def clean(self):

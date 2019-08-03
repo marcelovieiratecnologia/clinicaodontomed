@@ -1,11 +1,10 @@
 from django.contrib import admin
 from .models import EntradaSaida
+
 from datetime import date
 
+
 # Register your models here.
-
-
-
 class EntradaSaidaAdmin(admin.ModelAdmin):
 		#pass
 		fields = [
@@ -34,8 +33,10 @@ class EntradaSaidaAdmin(admin.ModelAdmin):
 		save_on_top = True # Colocando os botões no topo da página tb
 		radio_fields = {'tp_entrada': admin.HORIZONTAL} # assim o tp_entrada agora aparece não mais em um combobox mas sim como um radiobutton
 		#prepopulated_fields = {'dt_movimentacao': (date.today())}  .... tentando já preé preencher com a data do dia , tentar fazer isso.
-		show_full_result_count = True # Mostra um Contador da pesquisa, numero do que achou
-		
+		show_full_result_count = True # Mostra um Contador da pesquisa, quantidade que achou na pesquisa
+
+admin.site.site_header = 'Área Administrativa Clínica OdontoMed'
+
 # Exemplo para registrar um modelo junto ao admin
 admin.site.register(EntradaSaida, EntradaSaidaAdmin)
 
