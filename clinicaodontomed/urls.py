@@ -19,6 +19,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('home.urls')),
-    #path('grappelli/',include('grappelli.urls')), # grappelli urls
-    ]
+    path('', include('home.urls')), # pág principal
+    path('home', include('home.urls')), # pág principal
+    path('teste',include('home.urls')),
+    # path('grappelli/',include('grappelli.urls')), # grappelli urls
+]
+
+
+
