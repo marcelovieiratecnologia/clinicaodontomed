@@ -21,7 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')), # pág principal
     path('home', include('home.urls')), # pág principal
-    path('teste',include('home.urls')),
+    path('teste',include('home.urls')), # pág principal
     # path('grappelli/',include('grappelli.urls')), # grappelli urls
 ]
 

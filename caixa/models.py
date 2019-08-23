@@ -1,6 +1,7 @@
-from django.db import models
+from django.db import models 
 from django.core.exceptions import ValidationError
 from django.utils.html import format_html
+import datetime
 
 # Create your models here.
 
@@ -38,9 +39,11 @@ class EntradaSaida(models.Model):
 				('7.07', u'7.07%'),
 				('8.51', u'8.51%'),
 		)
-		dt_movimentacao = models.DateField(blank=False, null=False)
-		profissional=models.CharField(verbose_name='Profissional',max_length=150,blank=True)
-		paciente=models.CharField(verbose_name='Paciente',max_length=150,blank=True)
+		# id_entrada_saida = # Não preciso me preocupar com o campo ID o django cria sozinho e como prymary key e auto incremento.
+		#dt_movimentacao = models.DateField(blank=False, null=False) #auto_now_add=True) serve para auto preencher o campo com a a data e hora atual, mas esta dando pau
+		dt_movimentacao = models.DateField(default=datetime.datetime.now(), null=False, blank=False)
+		profissional=models.CharField(verbose_name='Profissional',max_length=130,blank=True)
+		paciente=models.CharField(verbose_name='Paciente',max_length=130,blank=True)
 		qt_parcelas=models.IntegerField(verbose_name='Quantidade de Parcelas',default=0)
 		valor_entr_saida=models.DecimalField(verbose_name='Valor',max_digits=14,decimal_places=2,default=0)
 		tp_entrada=models.CharField(verbose_name='Tipos de Entrada', max_length=10, choices=TP_ENTRADA)
@@ -50,6 +53,7 @@ class EntradaSaida(models.Model):
 		tp_porcentagem = models.CharField(verbose_name='Tipos de Porcentagens', max_length=10, choices=TP_PORCENTAGEM, blank=True, null=True)
 		observacao = models.TextField(verbose_name='Observação',blank=True)
 		motivo = models.CharField(verbose_name='Motivo da Entrada/Saída', max_length=150, blank=True)
+		fkprofissional = models.ForeignKey('profissional.Profissionais',verbose_name='Profissional/Especialidade',related_name='profissionais', on_delete=models.CASCADE)
 		
 		def calcula_desconto(self):
 				if self.tp_porcentagem == None:
@@ -82,6 +86,7 @@ class EntradaSaida(models.Model):
 		
 		
 		class Meta:
+				db_table = 'tb_om_entrada_saida' # definindo o nome da tabela, no caso não utilizei deixei o django fazer por mim
 				verbose_name = 'Tipo de Entrada'#'Entrada/Saída'
 				#verbose_name_plural = 'Entradas/Saídas'
 				ordering = ['dt_movimentacao']
@@ -120,5 +125,3 @@ class EntradaSaida(models.Model):
 						
 				
 				super().clean()
-				
-				
