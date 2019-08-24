@@ -39,7 +39,7 @@ class EntradaSaida(models.Model):
 				('7.07', u'7.07%'),
 				('8.51', u'8.51%'),
 		)
-		# id_entrada_saida = # Não preciso me preocupar com o campo ID o django cria sozinho e como prymary key e auto incremento.
+		# id_entrada_saida = # Não preciso me preocupar com o campo ID o django cria sozinho e como primary key e auto incremento.
 		#dt_movimentacao = models.DateField(blank=False, null=False) #auto_now_add=True) serve para auto preencher o campo com a a data e hora atual, mas esta dando pau
 		dt_movimentacao = models.DateField(default=datetime.datetime.now(), null=False, blank=False)
 		profissional=models.CharField(verbose_name='Profissional',max_length=130,blank=True)
@@ -53,7 +53,8 @@ class EntradaSaida(models.Model):
 		tp_porcentagem = models.CharField(verbose_name='Tipos de Porcentagens', max_length=10, choices=TP_PORCENTAGEM, blank=True, null=True)
 		observacao = models.TextField(verbose_name='Observação',blank=True)
 		motivo = models.CharField(verbose_name='Motivo da Entrada/Saída', max_length=150, blank=True)
-		fkprofissional = models.ForeignKey('profissional.Profissionais',verbose_name='Profissional/Especialidade',related_name='profissionais', on_delete=models.CASCADE)
+		fkprofissional = models.ForeignKey('profissional.Profissionais',verbose_name='Profissional/Especialidade',related_name='qry_profissionais', on_delete=models.CASCADE)
+		
 		
 		def calcula_desconto(self):
 				if self.tp_porcentagem == None:
@@ -83,7 +84,6 @@ class EntradaSaida(models.Model):
 						'<span style="color:red;">{}</span>',
 						self.valor_entr_saida,
 				)
-		
 		
 		class Meta:
 				db_table = 'tb_om_entrada_saida' # definindo o nome da tabela, no caso não utilizei deixei o django fazer por mim
