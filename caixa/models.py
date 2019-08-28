@@ -6,13 +6,15 @@ import datetime
 # Create your models here.
 
 '''
-FIELDS
-tp_entrada(Entrada,Saida); tp_convenio(InterOdonto, Convênio,Particular;Bradesco); tp_pagamento(Crédito,Débito,Dinheiro), tp_credito(APrazo); tp_porcentagem(valor1,valor2,valor3,valor4)
-data_movimento;
-profissional;
-paciente;
-qt_parcelas;
-valor_ent_saida;
+@@@ fazer algo assim para que eu trafegue no link com o UUID e não com o id , isso por segurança !
+from django.contrib.auth.models import AbstractUser
+from django.db.models import CharField, UUIDField
+from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
+import uuid
+
+class User(AbstractUser):
+    id = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 '''
 
 class EntradaSaida(models.Model):
@@ -41,6 +43,7 @@ class EntradaSaida(models.Model):
 		)
 		# id_entrada_saida = # Não preciso me preocupar com o campo ID o django cria sozinho e como primary key e auto incremento.
 		#dt_movimentacao = models.DateField(blank=False, null=False) #auto_now_add=True) serve para auto preencher o campo com a a data e hora atual, mas esta dando pau
+		# dt_movimentacao = models.DateField(default=datetime.datetime.now(), null=False, blank=False)
 		dt_movimentacao = models.DateField(default=datetime.datetime.now(), null=False, blank=False)
 		profissional=models.CharField(verbose_name='Profissional',max_length=130,blank=True)
 		paciente=models.CharField(verbose_name='Paciente',max_length=130,blank=True)
