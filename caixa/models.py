@@ -1,7 +1,17 @@
-from django.db import models 
+from django.db import models
+
 from django.core.exceptions import ValidationError
 from django.utils.html import format_html
+from joinfield.joinfield import JoinField
+
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
+
 import datetime
+
+
+
 
 # Create your models here.
 
@@ -43,8 +53,7 @@ class EntradaSaida(models.Model):
 		)
 		# id_entrada_saida = # Não preciso me preocupar com o campo ID o django cria sozinho e como primary key e auto incremento.
 		#dt_movimentacao = models.DateField(blank=False, null=False) #auto_now_add=True) serve para auto preencher o campo com a a data e hora atual, mas esta dando pau
-		# dt_movimentacao = models.DateField(default=datetime.datetime.now(), null=False, blank=False)
-		dt_movimentacao = models.DateField(default=datetime.datetime.now(), null=False, blank=False)
+		dt_movimentacao = models.DateField(default=datetime.datetime.now, null=False, blank=False)
 		profissional=models.CharField(verbose_name='Profissional',max_length=130,blank=True)
 		paciente=models.CharField(verbose_name='Paciente',max_length=130,blank=True)
 		qt_parcelas=models.IntegerField(verbose_name='Quantidade de Parcelas',default=0)
@@ -56,9 +65,15 @@ class EntradaSaida(models.Model):
 		tp_porcentagem = models.CharField(verbose_name='Tipos de Porcentagens', max_length=10, choices=TP_PORCENTAGEM, blank=True, null=True)
 		observacao = models.TextField(verbose_name='Observação',blank=True)
 		motivo = models.CharField(verbose_name='Motivo da Entrada/Saída', max_length=150, blank=True)
-		fkprofissional = models.ForeignKey('profissional.Profissionais',verbose_name='Profissional/Especialidade',related_name='qry_profissionais', on_delete=models.CASCADE)
-		
-		
+		fkprofissional = models.ForeignKey('profissional.Profissionais',verbose_name='Profissional',related_name='qry_profissionais', on_delete=models.CASCADE)
+		fkespecialidades = models.ForeignKey('profissional.Especialidades', verbose_name='Especialidades', related_name='qry_especialidades',null=True, blank=True, on_delete=models.CASCADE)
+
+		class Meta:
+				db_table = 'tb_om_entrada_saida' # definindo o nome da tabela, no caso não utilizei deixei o django fazer por mim
+				verbose_name = 'Tipo de Entrada'#'Entrada/Saída'
+				verbose_name_plural = 'Tipos de Entradas'
+				ordering = ['dt_movimentacao']
+
 		def calcula_desconto(self):
 				if self.tp_porcentagem == None:
 						return 0.0
@@ -87,19 +102,13 @@ class EntradaSaida(models.Model):
 						'<span style="color:red;">{}</span>',
 						self.valor_entr_saida,
 				)
+
+		def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+				self.paciente = self.paciente.upper()
+				super(EntradaSaida, self).save(force_update, force_insert)
 		
-		class Meta:
-				db_table = 'tb_om_entrada_saida' # definindo o nome da tabela, no caso não utilizei deixei o django fazer por mim
-				verbose_name = 'Tipo de Entrada'#'Entrada/Saída'
-				#verbose_name_plural = 'Entradas/Saídas'
-				ordering = ['dt_movimentacao']
-		
-		def __str__(self):
-				data = self.dt_movimentacao.strftime('%d/%m/%Y') # formatando a data
-				texto = self.tp_entrada + ' de R$ ' + str(self.valor_entr_saida) + ' , Data do Movimento de: ' + data
-				return texto
-		
-		#Validações
+		#  Validações
 		def clean(self):
 				# Validações para os tipos de Movimentações de Entradas
 				if self.tp_entrada == 'Entrada':
@@ -126,5 +135,9 @@ class EntradaSaida(models.Model):
 				if (self.valor_entr_saida == 0.00) :
 						raise ValidationError({'valor_entr_saida':'O Valor tem que ser maior que 0'})
 						
-				
 				super().clean()
+				
+		def __str__(self):
+				data = self.dt_movimentacao.strftime('%d/%m/%Y') # formatando a data
+				texto = self.tp_entrada + ' de R$ ' + str(self.valor_entr_saida) + ' , Data do Movimento de: ' + data
+				return texto

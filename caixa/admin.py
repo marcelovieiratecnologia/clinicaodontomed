@@ -11,8 +11,9 @@ class EntradaSaidaAdmin(admin.ModelAdmin):
 								('tp_entrada'),
 								('dt_movimentacao'),
 								(
-									('profissional'),
-									('fkprofissional')
+									#('profissional'), tirei para usar a FK
+									('fkprofissional'),
+									('fkespecialidades')
 								),
 								(
 									('paciente')
@@ -27,7 +28,7 @@ class EntradaSaidaAdmin(admin.ModelAdmin):
 							]
 		search_fields = ['tp_entrada']
 		list_filter = ['tp_entrada','dt_movimentacao']
-		list_display = ['tp_entrada','dt_movimentacao','profissional','paciente','motivo','tp_convenio','tp_pagamento','tp_credito','valor','desconto','total']
+		list_display = ['tp_entrada','dt_movimentacao','fkprofissional','fkespecialidades','paciente','motivo','tp_convenio','tp_pagamento','tp_credito','valor','desconto','total']
 		list_display_links = ['tp_entrada','dt_movimentacao']
 		#list_editable = ['motivo'] @@ Posso aqui colocar os campos que quero que fique editavél no Grid mesmo sem ter que entrar em modo de edição
 		date_hierarchy = 'dt_movimentacao' #@@@ Ficou como se fosse um filtro em cima do Grid
@@ -35,8 +36,17 @@ class EntradaSaidaAdmin(admin.ModelAdmin):
 		radio_fields = {'tp_entrada': admin.HORIZONTAL} # assim o tp_entrada agora aparece não mais em um combobox mas sim como um radiobutton
 		#prepopulated_fields = {'dt_movimentacao': date.today()} # .... tentando já preé preencher com a data do dia , tentar fazer isso.
 		show_full_result_count = True # Mostra um Contador da pesquisa, quantidade que achou na pesquisa
-
 		
+		# forma de se chamar um js aqui no admin
+		# class Media:
+		# 		js = 'js/admin.js'
+		# print(Media.js)
+
+		# def queryset(self, request, queryset):
+		# 		try:
+		# 				qs = EntradaSaida
+
+
 admin.site.site_header = 'Área Administrativa Clínica OdontoMed'
 admin.site.index_title = 'Bem vindo a Área Administratica da Clinica OdontoMed'
 # Exemplo para registrar um modelo junto ao admin
