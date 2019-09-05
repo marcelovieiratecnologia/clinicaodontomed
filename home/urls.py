@@ -1,9 +1,17 @@
 from django.urls import path
-from . import views
+from .views import *
 
 
 urlpatterns = [
-	path('', views.index, name='index'),
-	path('teste', views.teste, name='teste'),
-	path('marcelo', views.marcelo, name='marcelo')
+	path('', index, name='index'),
+	path('teste/', teste, name='teste'),
+	path('marcelo/', marcelo, name='marcelo'),
 ]
+
+# Dessa maneira preciso que esteja importado da seguinte maneira
+# from . import views
+# urlpatterns = [
+# 	path('', index, name='index'),
+# 	path('teste/', teste, name='teste'),
+# 	path('marcelo/', marcelo, name='marcelo'),
+# ]
