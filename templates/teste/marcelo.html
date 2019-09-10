@@ -1,13 +1,52 @@
 <!doctype html>
-{% load staticfiles %}
+{% load static %}
 <html>
 <head>
-    <title>template/teste/marcelo.html</title>
+    <title>templates/teste/marcelo.html</title>
+<!--O conteudo desse style virou um arquivo que estou chamando do STATIC-->
+<!--    <style>-->
+<!--        body{-->
+<!--            font-family: Segoe UI;-->
+<!--        }-->
+<!--        .logo{-->
+<!--            float: left;-->
+<!--        }-->
+<!--        .logo img{-->
+<!--            width: 250px;-->
+<!--            padding: 20px;-->
+<!--        }-->
+<!--        .menu {-->
+<!--            float: rigth;-->
+<!--            padding: 40px;-->
+<!--            font-size: 15pt;-->
+<!--        }-->
+<!--        .menu a{-->
+<!--            margin-left: 15px;-->
+<!--            margin-rigth: 15px;-->
+<!--        }-->
+<!--        .bemvindo{-->
+<!--            clear: both;-->
+<!--            padding: 0 20px;-->
+<!--        }-->
+<!--    </style>-->
+
+    <link rel="stylesheet" href="{% static 'teste/css/cabecalho.css' %}">
 </head>
 <body>
+
+    <div class="logo">
+        <img src="{% static 'teste/img/odontomed-capa.jpg'  %}" alt="OdontoMed Capa"/>
+    </div>
+
+    <div class="menu">
+        <a href="/clinicaodontomed/sobre/">Sobre</a><br />
+        <a href="/clinicaodontomed/sair/">sair</a><br />
+    </div>
+
+    <div class="bemvindo">
     <h2>Django diz para vc:</h2>
-    olá fulano! <b> {{ msgnegrito }}</b> <br />
-    <a href="/clinicaodontomed/sobre/">Sobre</a><br />
-    <img src="{% static 'teste/img/odontomed-capa.jpg'  %}" alt="OdontoMed Capa"/>
+        olá fulano! <b> {{ msgnegrito }}</b> <br />
+    </div>
+
 </body>
 </html>

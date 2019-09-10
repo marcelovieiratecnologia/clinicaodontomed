@@ -17,12 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 
 
-urlpatterns = [ # onde aponto meu APP e suas URLS que vai ser lida qdo eu digitar no browser
+urlpatterns = [ # onde aponto meu APP/diretorio/template e suas URLS que vai ser lida qdo eu digitar no browser
     path('admin/', admin.site.urls), # página do admin
     path('', include('home.urls')), # pág principal
-    path('home/', include('home.urls')), # abre também a pág principal
-    path('home/',include('home.urls')), # Apenas para teste , fiz dentro do Home(views - urls) os apontamentos e rotas, mas a página está em template/teste/
+    path('home/', include('home.urls')), # além da Pág Principal Aqui tenho a rota para o localhost:8000/teste ; localhost:8000/marcelo ...
     path('caixa/', include('caixa.urls')),
+    path('profissional/', include('profissional.urls')),
 ]
 
 

@@ -15,10 +15,14 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# TODO inativo por enquanto .. for de se resolver o diretorio temples passado por uma variavel
+#PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
+# TODO mudar o esquema para que as configurações fiquem um arquivo arquivo de configuração gerado pelo /contrib/env_gen.py .... igual esta no PROJ livepython94
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '9rwsmvn2_o-$d)^p9mwf-z#1h7o6k85ao-6#*xz=y5jh&74oyz'
 
@@ -59,8 +63,9 @@ ROOT_URLCONF = 'clinicaodontomed.urls'
 TEMPLATES = [
 		{
 				'BACKEND': 'django.template.backends.django.DjangoTemplates',
-				'DIRS': [os.path.join(BASE_DIR, 'templates')],  #@@@@@ veja a baixo que estou sando através da variavél
-				#'DIRS':[],
+				# 'DIRS':[],
+				'DIRS': [os.path.join(BASE_DIR, 'templates')],  #@@@@@ veja a baixo que estou usando através da variavél
+				#'DIRS':['%s/templates/' % (PROJECT_DIR) ], # passando o perfeito
 				'APP_DIRS': True,
 				'OPTIONS': {
 						'context_processors': [
@@ -76,8 +81,9 @@ TEMPLATES = [
 # TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 #
 # TEMPLATE_DIR = (
-#     TEMPLATE_PATH,
-# )
+#      TEMPLATE_PATH,
+# 		 TEMPLATETAGS,
+#  )
 
 WSGI_APPLICATION = 'clinicaodontomed.wsgi.application'
 
@@ -85,12 +91,26 @@ WSGI_APPLICATION = 'clinicaodontomed.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# Configurações para o acesso a base do SqlLite
 DATABASES = {
 		'default': {
 				'ENGINE': 'django.db.backends.sqlite3',
 				'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 		}
 }
+
+# TODO Acertar o projeto para que fique em uma base de dados MySQl
+# Configurações para acesso a Base do MySql
+# DATABASES = {
+# 		'default': {
+# 				'ENGINE': 'django.db.backends.mysql',
+# 				'NAME': 'odontomedbd',
+# 				'USER':'root',
+# 				'PASSWORD':'root',
+# 				'HOST':'localhost',
+# 				'PORT':'3306'
+# 		}
+# }
 
 
 # Password validation

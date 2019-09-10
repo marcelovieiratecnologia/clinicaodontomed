@@ -2,16 +2,8 @@ from django.db import models
 
 from django.core.exceptions import ValidationError
 from django.utils.html import format_html
-from joinfield.joinfield import JoinField
-
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
-
-
+#from joinfield.joinfield import JoinField
 import datetime
-
-
-
 
 # Create your models here.
 

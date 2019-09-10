@@ -1,0 +1,23 @@
+body{
+    font-family: Segoe UI;
+}
+.logo{
+    float: left;
+}
+.logo img{
+    width: 250px;
+    padding: 20px;
+}
+.menu {
+    float: rigth;
+    padding: 40px;
+    font-size: 15pt;
+}
+.menu a{
+    margin-left: 15px;
+    margin-rigth: 15px;
+}
+.bemvindo{
+    clear: both;
+    padding: 0 20px;
+}
