@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+
+<div class="card mb-3">
+    <div class="card-header">
+        Tem certeza que deseja remover essa: {{ entrada_saida.tp_entrada }} ?
+    </div>
+    <div class="card_body">
+        <h5 class="card-title">{{ entrada_saida.dt_movimentacao }} </h5>
+        <p class="card-text"> Valor Total: {{ entrada_saida.total }} </p>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Remover</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock conteudo %}

@@ -1,7 +1,59 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
-<h1>Listar Entradas e Saídas</h1>
-<h2>{{ imprimir_variavel }}</h2>
+
+<h1>Lista das Entradas e Saídas</h1>
+
+<a href="{% url 'cadastrar_entrada_saida' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Entrada Saida"></a>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Entr/Saída</th>
+      <th scope="col">Data Mov</th>
+      <th scope="col">Profissional</th>
+      <th scope="col">Especialidades</th>
+      <th scope="col">Paciente</th>
+      <th scope="col">Motivo</th>
+      <th scope="col">Convênios</th>
+      <th scope="col">Pagamentos</th>
+      <th scope="col">Créditos</th>
+      <th scope="col">VALOR</th>
+      <th scope="col">DESCONTO</th>
+      <th scope="col">TOTAL</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for entrada_saida in entradas_saidas %}
+    <tr>
+      <th scope="row">{{ entrada_saida.id }}</th>
+      <td>{{ entrada_saida.tp_entrada }}</td>
+      <td>{{ entrada_saida.dt_movimentacao }}</td>
+      <td>{{ entrada_saida.fkprofissional }}</td>
+      <td>{{ entrada_saida.fkespecialidades }}</td>
+      <td>{{ entrada_saida.paciente }}</td>
+      <td>{{ entrada_saida.motivo }}</td>
+      <td>{{ entrada_saida.tp_convenio }}</td>
+      <td>{{ entrada_saida.tp_pagamento }}</td>
+      <td>{{ entrada_saida.tp_credito }}</td>
+      <td>{{ entrada_saida.valor }}</td>
+      <td>{{ entrada_saida.desconto }}</td>
+      <td>{{ entrada_saida.total }}</td>
+      <td>
+          <a href="{% url 'editar_entrada_saida' entrada_saida.id %}">Editar</a>
+          <a href="{% url 'remover_entrada_saida' entrada_saida.id %}">Remover</a>
+
+      </td>
+
+    </tr>
+  {% endfor %}
+  </tbody>
+
+</table>
+
+<a href="{% url 'cadastrar_entrada_saida' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Entrada Saida"></a>
+
 {% endblock conteudo %}
 

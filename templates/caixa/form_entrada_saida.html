@@ -8,62 +8,94 @@
 
     {% csrf_token %}
 
-    <div class="form-group col-md-6">
-        <label>Data da Movimentação: </label>
-            {{ form_entrada_saida.dt_movimentacao|addclass:'form-control' }}
+    <div class="row">
+        <div class="form-group col-md-2">
+            {{ form_entrada_saida.erros }}
+            <label>Dt Movimentação: </label>
+                {{ form_entrada_saida.dt_movimentacao|addclass:'form-control' }}
+        </div>
+        <div class="form-group col-md-8">
+            {{ form_entrada_saida.paciente.erros }}
+            <label>Nome do Paciente: </label>
+                {{ form_entrada_saida.paciente|addclass:'form-control' }}
+        </div>
     </div>
-    <div class="form-group">
-        <label>Nome do Profissional: </label>
-            {{ form_entrada_saida.profissional|addclass:'form-control' }}
+    <div class="row">
+<!--Vai ficar fora pq estou trazendo o COMBO BOX-->
+<!--        <div class="form-group col-md-6">-->
+<!--            {{ form_entrada_saida.profissional.erros }}-->
+<!--            <label>Nome do Profissional: </label>-->
+<!--                {{ form_entrada_saida.profissional|addclass:'form-control' }}-->
+<!--        </div>-->
+        <div class="form-group col-md-6">
+            {{ form_entrada_saida.fkprofissional.erros }}
+            <label>Profissional: </label>
+                {{ form_entrada_saida.fkprofissional|addclass:'form-control' }}
+        </div>
+        <div class="form-group col-md-4">
+            {{ form_entrada_saida.fkespecialidades.erros }}
+            <label>Especialidade: </label>
+                {{ form_entrada_saida.fkespecialidades|addclass:'form-control' }}
+        </div>
     </div>
-    <div class="form-group">
-        <label>Nome do Paciente: </label>
-            {{ form_entrada_saida.paciente|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
-        <label>Parcelas: </label>
-            {{ form_entrada_saida.qt_parcelas|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
-        <label>Vlr Entrada: </label>
-            {{ form_entrada_saida.valor_entr_saida|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
-        <label>Entrada/Saída: </label>
-            {{ form_entrada_saida.tp_entrada|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
-        <label>Convênio: </label>
-            {{ form_entrada_saida.tp_convenio|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
-        <label>Pagamento: </label>
-            {{ form_entrada_saida.tp_pagamento|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
-        <label>Crédito: </label>
-            {{ form_entrada_saida.tp_credito|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
-        <label>Porcentagem: </label>
-            {{ form_entrada_saida.tp_porcentagem|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
-        <label>Observação: </label>
-            {{ form_entrada_saida.observacao|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
+
+    <div class="row">
+        <div class="form-group col-md-12">
+        {{ form_entrada_saida.motivo.erros }}
         <label>Motivo: </label>
             {{ form_entrada_saida.motivo|addclass:'form-control' }}
+        </div>
     </div>
-    <div class="form-group">
-        <label>Profissional: </label>
-            {{ form_entrada_saida.fkprofissional|addclass:'form-control' }}
+    <div class="row">
+
+        <div class="form-group col-md-1">
+            {{ form_entrada_saida.qt_parcelas.erros }}
+            <label>Parcelas: </label>
+                {{ form_entrada_saida.qt_parcelas|addclass:'form-control' }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ form_entrada_saida.valor_entr_saida.erros }}
+            <label>Vlr Entrada: </label>
+                {{ form_entrada_saida.valor_entr_saida|addclass:'form-control' }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ form_entrada_saida.tp_entrada.erros }}
+            <label>Entrada/Saída: </label>
+                {{ form_entrada_saida.tp_entrada|addclass:'form-control' }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ form_entrada_saida.tp_convenio.erros}}
+            <label>Convênio: </label>
+                {{ form_entrada_saida.tp_convenio|addclass:'form-control' }}
+        </div>
     </div>
-    <div class="form-group">
-        <label>Especialidade: </label>
-            {{ form_entrada_saida.fkespecialidades|addclass:'form-control' }}
+    <div class="row">
+
+        <div class="form-group col-md-3">
+            {{ form_entrada_saida.tp_pagamento.erros }}
+            <label>Pagamento: </label>
+                {{ form_entrada_saida.tp_pagamento|addclass:'form-control' }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ form_entrada_saida.tp_credito.erros }}
+            <label>Crédito: </label>
+                {{ form_entrada_saida.tp_credito|addclass:'form-control' }}
+        </div>
+        <div class="form-group col-md-2">
+            {{ form_entrada_saida.tp_porcentagem.erros }}
+            <label>Porcentagem: </label>
+                {{ form_entrada_saida.tp_porcentagem|addclass:'form-control' }}
+        </div>
     </div>
+    <div class="row">
+
+        <div class="form-group col-md-12">
+            {{ form_entrada_saida.observacao.erros }}
+            <label>Observação: </label>
+                {{ form_entrada_saida.observacao|addclass:'form-control' }}
+        </div>
+    </div>
+
     <div class="form-group">
         <input type="submit" value="Salvar">
     </div>

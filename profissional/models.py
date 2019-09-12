@@ -114,9 +114,9 @@ class Profissionais(models.Model):
 				verbose_name = 'Profissional'  # 'Entrada/Saída'
 				verbose_name_plural = 'Profissionais'
 
-		def save(self, force_insert=False, force_update=False, using=None,update_fields=None):
-				self.nome_profissional = self.nome_profissional.upper()
-				super(Profissionais, self).save(force_insert, force_update)
+		# def save(self, force_insert=False, force_update=False, using=None,update_fields=None):
+		# 		self.nome_profissional = self.nome_profissional.upper()
+		# 		super(Profissionais, self).save(force_insert, force_update)
 		
 		def __str__(self):
 				return self.nome_profissional

@@ -95,10 +95,10 @@ class EntradaSaida(models.Model):
 						self.valor_entr_saida,
 				)
 
-		def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-				self.paciente = self.paciente.upper()
-				super(EntradaSaida, self).save(force_update, force_insert)
+		# Esse método estava salvando certo pelo /admin , mas pelo front estava dando problemas com o seguinte erro: "Cannot force an update in save() with no primary key."
+		# def save(self, force_insert=False, force_update=False, using=None,update_fields=None):
+		# 		self.paciente = self.paciente.upper()
+		# 		super(EntradaSaida, self).save(force_update, force_insert)
 		
 		#  Validações
 		def clean(self):

@@ -10,4 +10,6 @@ from .views import *
 urlpatterns = [
 		path('listar_entrada_saida/',listar_entrada_saida, name='listar_entrada_saida'),
 		path('cadastrar_entrada_saida/',cadastrar_entrada_saida, name='cadastrar_entrada_saida'),
+		path('editar_entrada_saida/<int:id>', editar_entrada_saida, name='editar_entrada_saida'), # <int:id> isso quer dizer que estou passando o parametro no qual meu metodo da view precisa
+		path('remover_entrada_saida/<int:id>', remover_entrada_saida, name='remover_entrada_saida'), # <int:id> isso quer dizer que estou passando o parametro no qual meu metodo da view precisa
 ]
