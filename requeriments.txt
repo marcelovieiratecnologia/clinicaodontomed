@@ -1,4 +1,5 @@
 Django==2.2.3
+django-adminlte2==0.4.1
 django-extensions==2.2.1
 django-localflavor==2.2
 python-decouple==3.1

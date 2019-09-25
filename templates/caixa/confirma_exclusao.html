@@ -1,22 +1,29 @@
-{% extends 'base.html' %}
+{% extends 'adminlte/base.html' %}
 
-{% block conteudo %}
+{% block title %}
+    Remoção de Entrada/Saída
+{% endblock %}
 
+{% block content %}
+<div class="col-md-12">
+  <div class="box box-danger">
+    <div class="box-header">
+      <h3 class="box-title">Tem certeza que deseja remover essa: {{ entrada_saida.tp_entrada }} ?</h3>
 
-<div class="card mb-3">
-    <div class="card-header">
-        Tem certeza que deseja remover essa: {{ entrada_saida.tp_entrada }} ?
+        <div class="card_body">
+            <h5 class="card-title">{{ entrada_saida.dt_movimentacao }} </h5>
+            <p class="card-text"> Valor Total: {{ entrada_saida.total }} </p>
+            <hr>
+            <form method="post">
+                {% csrf_token %}
+                <button class="btn btn-danger" type="submit">Remover</button>
+                <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary">Voltar</a>
+            </form>
+        </div>
+
     </div>
-    <div class="card_body">
-        <h5 class="card-title">{{ entrada_saida.dt_movimentacao }} </h5>
-        <p class="card-text"> Valor Total: {{ entrada_saida.total }} </p>
-        <hr>
-        <form method="post">
-            {% csrf_token %}
-            <button class="btn btn-danger" type="submit">Remover</button>
-        </form>
-    </div>
+  </div>
 </div>
 
 
-{% endblock conteudo %}
+{% endblock content %}

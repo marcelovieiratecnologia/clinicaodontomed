@@ -32,7 +32,7 @@ class EntradaSaidaAdmin(admin.ModelAdmin):
 		list_display_links = ['tp_entrada','dt_movimentacao']
 		#list_editable = ['motivo'] @@ Posso aqui colocar os campos que quero que fique editavél no Grid mesmo sem ter que entrar em modo de edição
 		date_hierarchy = 'dt_movimentacao' #@@@ Ficou como se fosse um filtro em cima do Grid
-		save_on_top = True # Colocando os botões no topo da página tb
+		# save_on_top = True # Colocando os botões no topo da página tb
 		radio_fields = {'tp_entrada': admin.HORIZONTAL} # assim o tp_entrada agora aparece não mais em um combobox mas sim como um radiobutton
 		#prepopulated_fields = {'dt_movimentacao': date.today()} # .... tentando já preé preencher com a data do dia , tentar fazer isso.
 		show_full_result_count = True # Mostra um Contador da pesquisa, quantidade que achou na pesquisa

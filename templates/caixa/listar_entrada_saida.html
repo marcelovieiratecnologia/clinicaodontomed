@@ -1,59 +1,99 @@
-{% extends 'base.html' %}
+{% extends 'adminlte/base.html' %}
 
-{% block conteudo %}
+{% block title %}
+    Lista de Entradas/Saidas
+{% endblock %}
 
-<h1>Lista das Entradas e Saídas</h1>
+
+{% block content %}
+<div class="box box-primary">
+    <div class="box-header box-body">
+        <h1 class="box-title">Lista de Entradas e Saídas</h1>
+    </div>
+</div>
+
+<div class="box box-success">
+    <div class="box-body">
+        <div class="hero-callout">
+            <div id="example_wrapper" class="dataTables_wrapper">
+                <div class="dataTables_length" id="example_length">
+                    <table id="myTable" class="table table-bordered table-hover">
+                        <thead>
+                            <tr role="row">
+                                <th>Entr/Saída</th>
+                                <th>Dt Movimento</th>
+                                <th>Profissional</th>
+                                <th>Especialidade</th>
+                                <th>Paciente</th>
+                                <th>Motivo</th>
+                                <th>Convênio</th>
+                                <th>Pagamento</th>
+                                <th>Créditos</th>
+                                <th>Valor</th>
+                                <th>Desconto</th>
+                                <th>TOTAL</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for entrada_saida in entradas_saidas %}
+                            <tr role="row" class="odd">
+                                <td>{{ entrada_saida.tp_entrada }}</td>
+                                <td>{{ entrada_saida.dt_movimentacao }}</td>
+                                <td>{{ entrada_saida.fkprofissional }}</td>
+                                <td>{{ entrada_saida.fkespecialidades }}</td>
+                                <td>{{ entrada_saida.paciente }}</td>
+                                <td>{{ entrada_saida.motivo }}</td>
+                                <td>{{ entrada_saida.tp_convenio }}</td>
+                                <td>{{ entrada_saida.tp_pagamento }}</td>
+                                <td>{{ entrada_saida.tp_credito }}</td>
+                                <td>{{ entrada_saida.valor }}</td>
+                                <td>{{ entrada_saida.desconto }}</td>
+                                <td>{{ entrada_saida.total }}</td>
+                                <td class="dt-body-left">
+                                    <a class="btn btn-info" href="{% url 'editar_entrada_saida' entrada_saida.id %}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a class="btn btn-danger" href="{% url 'remover_entrada_saida' entrada_saida.id %}">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                            <tfood>
+                                <tr>
+                                    <th class="dt-body-right" rowspan="1" colspan="1"></th>
+                                    <th class="dt-body-left" rowspan="1" colspan="1"></th>
+                                    <th class="dt-body-left" rowspan="1" colspan="1"></th>
+                                    <th class="dt-body-left" rowspan="1" colspan="1"></th>
+                                    <th class="dt-body-left" rowspan="1" colspan="1"></th>
+                                    <th class="dt-body-left" rowspan="1" colspan="1"></th>
+                                    <th class="dt-body-left" rowspan="1" colspan="1"></th>
+                                    <th class="dt-body-left" rowspan="1" colspan="1"></th>
+                                    <th class="dt-body-left" rowspan="1" colspan="1"></th>
+                                    <th class="dt-body-left" rowspan="1" colspan="1"></th>
+                                    <th class="dt-body-left" rowspan="1" colspan="1">TOTAL</th>
+                                    <th class="dt-body-left" rowspan="1" colspan="1"></th>
+                                </tr>
+                            </tfood>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <a href="{% url 'cadastrar_entrada_saida' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Entrada Saida"></a>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Entr/Saída</th>
-      <th scope="col">Data Mov</th>
-      <th scope="col">Profissional</th>
-      <th scope="col">Especialidades</th>
-      <th scope="col">Paciente</th>
-      <th scope="col">Motivo</th>
-      <th scope="col">Convênios</th>
-      <th scope="col">Pagamentos</th>
-      <th scope="col">Créditos</th>
-      <th scope="col">VALOR</th>
-      <th scope="col">DESCONTO</th>
-      <th scope="col">TOTAL</th>
-    </tr>
-  </thead>
 
-  <tbody>
-  {% for entrada_saida in entradas_saidas %}
-    <tr>
-      <th scope="row">{{ entrada_saida.id }}</th>
-      <td>{{ entrada_saida.tp_entrada }}</td>
-      <td>{{ entrada_saida.dt_movimentacao }}</td>
-      <td>{{ entrada_saida.fkprofissional }}</td>
-      <td>{{ entrada_saida.fkespecialidades }}</td>
-      <td>{{ entrada_saida.paciente }}</td>
-      <td>{{ entrada_saida.motivo }}</td>
-      <td>{{ entrada_saida.tp_convenio }}</td>
-      <td>{{ entrada_saida.tp_pagamento }}</td>
-      <td>{{ entrada_saida.tp_credito }}</td>
-      <td>{{ entrada_saida.valor }}</td>
-      <td>{{ entrada_saida.desconto }}</td>
-      <td>{{ entrada_saida.total }}</td>
-      <td>
-          <a href="{% url 'editar_entrada_saida' entrada_saida.id %}">Editar</a>
-          <a href="{% url 'remover_entrada_saida' entrada_saida.id %}">Remover</a>
+{% block js %}
 
-      </td>
+<!--colocar aqui meu bloco js -->
 
-    </tr>
-  {% endfor %}
-  </tbody>
+{% endblock js %}
 
-</table>
+{% endblock content %}
 
-<a href="{% url 'cadastrar_entrada_saida' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Entrada Saida"></a>
-
-{% endblock conteudo %}
 

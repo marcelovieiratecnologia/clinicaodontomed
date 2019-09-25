@@ -1,0 +1,32 @@
+{% extends 'adminlte/base.html' %}
+
+{% block title %}
+    Remoção de Profissional
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+  <div class="box box-danger">
+    <div class="box-header">
+      <h3 class="box-title">Tem certeza que deseja remover o Profissional abaixo?</h3>
+
+        <div class="card_body">
+            <h3 class="card-title">{{ profissional }}</h3>
+
+            <h4> Removendo o Profissional, será removido junstamente as suas especialidades.</h4>
+                {% for especialidade in profissional.especialidades.all %}
+                    <h5>{{ especialidade }}</h5>
+                {% endfor %}
+            <hr>
+            <form method="post">
+                {% csrf_token %}
+                <button class="btn btn-danger" type="submit">Remover</button>
+                <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary">Voltar</a>
+            </form>
+        </div>
+
+    </div>
+  </div>
+</div>
+{% endblock content %}
+

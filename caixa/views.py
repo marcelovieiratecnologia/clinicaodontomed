@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect, render_to_response
 from .forms import EntradaSaidaForm
 from .entidades.entrada_saida import Entrada_Saida
 from .services import entrada_saida_service
+from profissional.services import profissional_service
+from profissional.services import especialidades_service
 
-# Create your views here.
 
 def index(request):
 		return render_to_response()
@@ -16,7 +17,10 @@ def listar_entrada_saida(request):
 		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas})
 
 def cadastrar_entrada_saida(request):
-
+		context = {}
+		profissionais = profissional_service.listar_profissional()
+		especialidades = especialidades_service.listar_especialidade()
+		#especialidades = profissional_service.listar_especialidade_id(id)
 		if request.method == "POST": # vejo se esta sendo um POST
 				form_entrada_saida = EntradaSaidaForm(request.POST)
 				if form_entrada_saida.is_valid(): # se for válido sigo 
@@ -43,7 +47,7 @@ def cadastrar_entrada_saida(request):
 						return redirect('listar_entrada_saida') # dando certo chamo meu metodo 'listar_entrada_saida' que no caso ele se ecarrega de chamar meu html para que liste todas as entradas e saidas
 		else:
 				form_entrada_saida = EntradaSaidaForm()
-		return render(request, 'caixa/form_entrada_saida.html', {'form_entrada_saida': form_entrada_saida})
+		return render(request, 'caixa/form_entrada_saida.html', {'form_entrada_saida': form_entrada_saida})  #, 'profissionais': profissionais,'especialidades': especialidades})
 																																																		
 def editar_entrada_saida(request, id):
 		entrada_saida_bd = entrada_saida_service.listar_entrada_saida_id(id)
@@ -70,9 +74,6 @@ def editar_entrada_saida(request, id):
 				return redirect('listar_entrada_saida')
 		return render(request, 'caixa/form_entrada_saida.html', {'form_entrada_saida': form_entrada_saida})
 		
-		
-
-
 def remover_entrada_saida(request, id):
 		entrada_saida_bd = entrada_saida_service.listar_entrada_saida_id(id)
 		if request.method == "POST":

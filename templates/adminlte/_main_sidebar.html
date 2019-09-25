@@ -1,0 +1,126 @@
+{% load adminlte_helpers %}
+<!-- Left side column. contains the sidebar -->
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        {% block user_panel %}
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="{% avatar_url size=90 %}" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p>{% firstof request.user.get_full_name request.user.username %}</p>
+            </div>
+        </div>
+        {% endblock %}
+
+        {% block form %}{% endblock %}
+
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        {% block nav_links_ul %}
+        <ul class="sidebar-menu">
+            {% block nav_links_outer %}
+            <li class="header">{% block nav_heading %}MENU DE NAVEGAÇÂO{% endblock %}</li>
+
+            {% block nav_links %}
+                <li>
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>Example link</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dollar"></i> <span>Caixa</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href=" {% url 'listar_entrada_saida' %} ">
+                                <i class="fa fa-list-ul"></i> Listar Entradas/Saídas
+                            </a>
+                        </li>
+                        <li>
+                            <a href=" {% url 'cadastrar_entrada_saida' %} ">
+                                <i class="fa fa-save"></i> Cadastrar Entrada/Saída
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-user-md"></i> <span>Profissional</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href=" {% url 'listar_profissional' %} ">
+                                <i class="fa fa-list-ul"></i> Listar Profissionais
+                            </a>
+                        </li>
+                        <li>
+                            <a href=" {% url 'cadastrar_profissional' %} ">
+                                <i class="fa fa-save"></i> Cadastrar Profissionais
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-hospital-o"></i> <span>Cidades</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href=" {% url 'listar_cidade' %} ">
+                                <i class="fa fa-list-ul"></i> Listar Cidades
+                            </a>
+                        </li>
+                        <li>
+                            <a href=" {% url 'cadastrar_cidade' %} ">
+                                <i class="fa fa-save"></i> Cadastrar Cidades
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-hospital-o"></i> <span>Especialidades</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href=" {% url 'listar_especialidade' %} ">
+                                <i class="fa fa-list-ul"></i> Listar Especialidades
+                            </a>
+                        </li>
+                        <li>
+                            <a href=" {% url 'cadastrar_especialidade' %} ">
+                                <i class="fa fa-save"></i> Cadastrar Especialidade
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+            {% endblock nav_links %}
+            {% endblock nav_links_outer %}
+        </ul>
+        {% endblock nav_links_ul %}
+    </section>
+    <!-- /.sidebar -->
+</aside>
