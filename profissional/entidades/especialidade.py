@@ -1,7 +1,7 @@
 
 class Especialidade():
 		def __init__(self, especialidade):
-				self.__especialdiade = especialidade
+				self.__especialidade = especialidade
 		
 		@property
 		def especialidade(self):

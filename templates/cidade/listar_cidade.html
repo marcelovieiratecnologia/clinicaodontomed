@@ -5,93 +5,51 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="box box-primary">
     <div class="box-header box-body">
-        <h1 class="box-title">Lista de Cidades</h1>
+        <div class="pull-left col-md-10">
+            <h1 class="box-title">Lista de Cidades</h1>
+        </div>
+        <div class="pull-rigth col-md-2">
+            <a href="{% url 'cadastrar_cidade' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Cidade"></a>
+        </div>
     </div>
 </div>
+
+
 <div class="box box-success">
     <div class="box-body">
-        <div class="hero-callout">
-            <div id="example_wrapper" class="dataTables_wrapper">
-                <div class="dataTables_length" id="example_length">
-                </div>
-                <table id="myTable" class="display nowrap dataTable dtr-inline collapsed" style="width: 100%;" role="grid" aria-describedby="example_info">
-                    <thead>
-                        <tr role="row">
-                            <th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 119px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nome da Cidade</th>
-                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 190px;" aria-label="Position: activate to sort column ascending">Estado</th>
-                            <th class="dt-body-center" rowspan="1" colspan="1" style="width: 190px;">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for cidade in cidades %}
-                        <tr role="row" class="odd">
-                            <td tabindex="0" class="sorting_1">{{ cidade.nome_cidade }}</td>
-                            <td>{{ cidade.uf }}</td>
-                            <td class="dt-body-left">
-                                <a class="btn btn-info" href="{% url 'editar_cidade' cidade.id %}">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                                <a class="btn btn-danger" href="{% url 'remover_cidade' cidade.id %}">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-<!--                        <tr>-->
-<!--                            <th class="dt-body-right" rowspan="1" colspan="1">TOTAL</th>-->
-<!--                            <th class="dt-body-left" rowspan="1" colspan="1">TOTAL</th>-->
-<!--                            <th class="dt-body-left" rowspan="1" colspan="1"></th>-->
-<!--                        </tr>-->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <table id="myTableGenerics" class="table table-bordered table-hover" cellpadding="5" width="100%">
+            <thead>
+                <tr>
+                    <th>Nome da Cidade</th>
+                    <th>Estado</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for cidade in cidades %}
+                <tr>
+                    <td>{{ cidade.nome_cidade }}</td>
+                    <td>{{ cidade.uf }}</td>
+                    <td class="dt-body-center" nowrap="">
+                        <a class="btn btn-info" href="{% url 'editar_cidade' cidade.id %}">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a class="btn btn-danger" href="{% url 'remover_cidade' cidade.id %}">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 
 <a href="{% url 'cadastrar_cidade' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Cidade"></a>
 
 
-
-
-
 {% endblock content %}
 
-<!--
-        <div class="dataTables_wrapper form-inline dt-bootstrap">
-            <table id="myTable1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th class="col-md-5"scope="col">Nome da Cidade</th>
-                        <th class="col-md-2"scope="col">UF</th>
-                        <th class="col-md-1" scope="col">Ações</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                {% for cidade in cidades %}
-                    <tr>
-                        <th scope="row">{{ cidade.id }}</th>
-                        <td>{{ cidade.nome_cidade }}</td>
-                        <td>{{ cidade.uf }}</td>
-                        <td>
-                            <a class="btn btn-info" href="{% url 'editar_cidade' cidade.id %}">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                            <a class="btn btn-danger" href="{% url 'remover_cidade' cidade.id %}">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                        </td>
-                   </tr>
-                {% endfor %}
-                <tr>
-                    <td>total1</td>
-                    <td>total2</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
--->

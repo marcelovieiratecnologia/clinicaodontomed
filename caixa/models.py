@@ -77,24 +77,25 @@ class EntradaSaida(models.Model):
 				valor_total = float(self.valor_entr_saida) - self.calcula_desconto()
 				return "{0:.2f}".format(valor_total)
 		
-		
 		# Modificando o valor do campo usando html
 		def desconto(self):
 				return format_html(
-						'<span style="color:green;">{}</span>',
+						'<span style="color:#006400;">{}</span>',
 						self.calcula_desconto(),
 				)
 		def total(self):
 				return format_html(
-						'<span style="color:red; font-weight: bold;">{}</span>',
+						'<span style="color:#FF0000; font-weight: bold;">{}</span>',
 						self.calcula_totalLiquido(),
 				)
 		def valor(self):
 				return format_html(
-						'<span style="color:red;">{}</span>',
+						'<span style="color:#FF0000;">{}</span>',
 						self.valor_entr_saida,
 				)
 
+	
+		
 		# Esse método estava salvando certo pelo /admin , mas pelo front estava dando problemas com o seguinte erro: "Cannot force an update in save() with no primary key."
 		def save(self, force_insert=False, force_update=False, using=None,update_fields=None):
 				self.paciente = self.paciente.upper()

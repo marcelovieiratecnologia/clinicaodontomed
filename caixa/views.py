@@ -4,17 +4,78 @@ from .entidades.entrada_saida import Entrada_Saida
 from .services import entrada_saida_service
 from profissional.services import profissional_service
 from profissional.services import especialidades_service
-
+from datetime import date, datetime
+from decimal import *
 
 def index(request):
 		return render_to_response()
 
+def listar_entrada_saida_anomes(request):
+		
+		anomes = request.GET.get('datepicker_month_filter')
+		ano = anomes[-4:] # pego o ano da string '09/2019'
+		mes = anomes[:-5] # pego o mes da string '09/2019'
+		
+		entradas_saidas = entrada_saida_service.listar_entrada_saida_anomes(ano, mes)
+		total_bruto_final = 0.00
+		total_desconto_final = 0.00
+		total_liquido_final = 0.00
+		
+		for entrada_saida in entradas_saidas:
+				total_bruto_final = total_bruto_final + float(entrada_saida.valor_entr_saida)
+				total_desconto_final = total_desconto_final + (
+								float(entrada_saida.valor_entr_saida) * float(entrada_saida.tp_porcentagem)) / 100
+		
+		total_liquido_final = + total_bruto_final - total_desconto_final
+		
+		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas,
+																															 "total_bruto_final": round(total_bruto_final, 2),
+																															 "total_desconto_final": round(total_desconto_final, 2),
+																															 "total_liquido_final": round(total_liquido_final, 2)
+																															 })
+		
+def listar_entrada_saida_data(request):
+		
+		dt = request.GET.get('datepicker_filter')
+		data = datetime.strptime(dt, '%d/%m/%Y').date()
+		
+		entradas_saidas = entrada_saida_service.listar_entrada_saida_data(data)
+		total_bruto_final = 0.00
+		total_desconto_final = 0.00
+		total_liquido_final = 0.00
+		
+		for entrada_saida in entradas_saidas:
+				total_bruto_final = total_bruto_final + float(entrada_saida.valor_entr_saida)
+				total_desconto_final = total_desconto_final + (
+										float(entrada_saida.valor_entr_saida) * float(entrada_saida.tp_porcentagem)) / 100
+		
+		total_liquido_final = + total_bruto_final - total_desconto_final
+		
+		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas,
+																															 "total_bruto_final": round(total_bruto_final, 2),
+																															 "total_desconto_final": round(total_desconto_final, 2),
+																															 "total_liquido_final": round(total_liquido_final, 2)
+																															 })
 
 def listar_entrada_saida(request):
-		# imprimir_variavel = 'Valor da variavel impressa no html que esta vindo da VIEW do APP Caixa'
-		# dicinario_Imprimir_variavel = {'dicinario_Imprimir_variavel': "Passando o valor para o html através de uma variavel de Dicionário"}
+		# total_bruto_final = entrada_saida_service.calcula_total_final() #### Preferi usar no for
+		
 		entradas_saidas = entrada_saida_service.listar_entrada_saida()
-		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas})
+		total_bruto_final = 0.00
+		total_desconto_final = 0.00
+		total_liquido_final = 0.00
+		
+		for entrada_saida in entradas_saidas:
+				total_bruto_final = total_bruto_final + float(entrada_saida.valor_entr_saida)
+				total_desconto_final = total_desconto_final + (float(entrada_saida.valor_entr_saida) * float(entrada_saida.tp_porcentagem)) / 100
+
+		total_liquido_final = + total_bruto_final - total_desconto_final
+
+		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas,
+																															 "total_bruto_final": round(total_bruto_final,2),
+																															 "total_desconto_final": round(total_desconto_final,2),
+																															 "total_liquido_final": round(total_liquido_final,2)
+																															 })
 
 def cadastrar_entrada_saida(request):
 		context = {}

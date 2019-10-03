@@ -1,60 +1,65 @@
 {% extends 'adminlte/base.html' %}
 
-
 {% block title %}
     Lista de Profissionais
 {% endblock %}
-
 {% block content %}
+<div class="box box-primary">
+    <div class="box-header box-body">
+        <div class="pull-left col-md-10">
+            <h1 class="box-title">Lista de Profissionais Cadastrados</h1>
+        </div>
+        <div class="pull-rigth col-md-2">
+            <a href="{% url 'cadastrar_profissional' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Profissional"></a>
+        </div>
+    </div>
+</div>
 
-<h2>Listagem de Profissionais Cadastrados</h2>
-<table class="table table-striped">
-    <thead>
-        <tr>
-<!--            <th scope="col">#</th>-->
-            <th scope="col">Nome do Profissional</th>
-            <th scope="col">CPF</th>
-            <th scope="col">Reg Classe</th>
-            <th scope="col">Cidade</th>
-            <th scope="col">Org Emissor</th>
-            <th scope="col">Especialidade</th>
-            <th scope="col">Especialidade(s)</th>
-            <th scope="col">Ações</th>
-        </tr>
-    </thead>
+<div class="box box-success">
+    <div class="box-body">
+        <table id="myTableGenerics" class="table table-bordered table-hover" cellpadding="5" width="100%">
+            <thead>
+                <tr>
+                    <th>Nome do Profissional</th>
+                    <th>CPF</th>
+                    <th>Reg Classe</th>
+                    <th>Cidade</th>
+                    <th>Org Emissor</th>
+                    <th>Especialidade</th>
+                    <th>Especialidade(s)</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
 
-    <tbody>
-    {% for profissional in profissionais %}
-        <tr>
-<!--            <th scope="row">{{ profissional.id }}</th>-->
-            <td>{{ profissional.nome_profissional }}</td>
-            <td>{{ profissional.cpf_profissional }}</td>
-            <td>{{ profissional.num_registro_classe }}</td>
-            <td>{{ profissional.cidades }}</td>
-            <td>{{ profissional.orgao_emissor }}</td>
-            <td>{{ profissional.especialidades }}</td>
-
-            <td>
-            {% for especialidade in profissional.especialidades.all %}
-
-                {{ especialidade.especialidade }}/
-
+            <tbody>
+            {% for profissional in profissionais %}
+                <tr>
+                    <td>{{ profissional.nome_profissional }}</td>
+                    <td>{{ profissional.cpf_profissional }}</td>
+                    <td>{{ profissional.num_registro_classe }}</td>
+                    <td>{{ profissional.cidades }}</td>
+                    <td>{{ profissional.orgao_emissor }}</td>
+                    <td>{{ profissional.especialidades }}</td>
+                    <td>
+                    {% for especialidade in profissional.especialidades.all %}
+                        {{ especialidade.especialidade }}/
+                    {% endfor %}
+                     </td>
+                    <td nowrap="">
+                        <a class="btn btn-info" href="{% url 'editar_profissional' profissional.id %}">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a class="btn btn-danger" href="{% url 'remover_profissional' profissional.id %}">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+               </tr>
             {% endfor %}
-             </td>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-            <td>
-                <a class="btn btn-info" href="{% url 'editar_profissional' profissional.id %}">
-                    <i class="fa fa-edit"></i>
-                </a>
-                <a class="btn btn-danger" href="{% url 'remover_profissional' profissional.id %}">
-                    <i class="fa fa-trash"></i>
-                </a>
-            </td>
-       </tr>
-    {% endfor %}
-    </tbody>
-</table>
 <a href="{% url 'cadastrar_profissional' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Profissional"></a>
-
 
 {% endblock content %}

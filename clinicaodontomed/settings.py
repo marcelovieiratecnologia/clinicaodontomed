@@ -37,7 +37,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
 		# 'datatable',
-		'django_adminlte_theme',
+		#'django_adminlte_theme', template para meu admin, não estou usando no momento
 		'django_adminlte',
 		'home',
 		'caixa',

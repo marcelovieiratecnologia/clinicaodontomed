@@ -20,8 +20,8 @@ def cadastrar_especialidade(request):
 		else:
 				form_especialidade = EspecialidadesForm()
 				return render(request, 'especialidade/form_especialidade.html', {'form_especialidade': form_especialidade})
-#
-#
+
+
 # def editar_profissional(request, id):
 # 		profissional_antigo = profissional_service.listar_profissional_id(id)
 # 		form_profissional = ProfissionaisForm(request.POST or None, instance=profissional_antigo)

@@ -81,7 +81,7 @@
         </div>
         <div class="col-lg-5 p-3">
           <!--<form class="p-4 bg-light" method="post" action="https://formspree.io/">-->
-          <form class="p-4 bg-light" action="/admin/login/?next=/admin/" method="post" id="login-form"><input type="hidden" name="csrfmiddlewaretoken" value="0Dk2wteuIb8g9KtmUhGKCD9j5UzeJaaey1Jrm1ijWgXWHqO550tynBAujDbRSFbs">{% csrf_token %}
+          <form class="p-4 bg-light" action="{% url 'listar_entrada_saida' %}" method="post" id="login-form"><input type="hidden" name="csrfmiddlewaretoken" value="0Dk2wteuIb8g9KtmUhGKCD9j5UzeJaaey1Jrm1ijWgXWHqO550tynBAujDbRSFbs">{% csrf_token %}
             <h4 class="mb-4 text-center">Acessar Sistema</h4>
             <!-- Campo Login -->
             <div class="required form-group" for="id_username"> <label>Login</label>

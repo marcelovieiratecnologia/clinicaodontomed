@@ -1,43 +1,47 @@
 {% extends 'adminlte/base.html' %}
 
-{% load meus_filtros %}
-
-
 {% block title %}
     Lista de Espcialidades
 {% endblock %}
-
-
 {% block content %}
+<div class="box box-primary">
+    <div class="box-header box-body">
+        <div class="pull-left col-md-10">
+            <h1 class="box-title">Lista de Especialidades Cadastradas</h1>
+        </div>
+        <div class="pull-rigth col-md-2">
+            <a href="{% url 'cadastrar_especialidade' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Especialidade"></a>
+        </div>
+    </div>
+</div>
 
-<h1>Lista de Especialidades</h1>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-<!--            <th scope="col">#</th>-->
-            <th class="col-md-5"scope="col">Especialidades</th>
-            <th class="col-md-1" scope="col">Ações</th>
-        </tr>
-    </thead>
-
-    <tbody>
-    {% for especialidade in especialidades %}
-        <tr>
-            <td>{{ especialidade.especialidade }}</td>
-
-            <td>
-<!--                <a class="btn btn-info" href="{ url 'editar_cidade' cidade.id }">-->
-<!--                    <i class="fa fa-edit"></i>-->
-<!--                </a>-->
-<!--                <a class="btn btn-danger" href="{ url 'remover_cidade' cidade.id }">-->
-<!--                    <i class="fa fa-trash"></i>-->
-<!--                </a>-->
-            </td>
-       </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<div class="box box-success">
+    <div class="box-body">
+        <table id="myTableGenerics" class="table table-bordered table-hover" cellpadding="5" width="100%">
+            <thead>
+                <tr>
+                    <th>Especialidades</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for especialidade in especialidades %}
+                <tr>
+                    <td>{{ especialidade.especialidade }}</td>
+                    <td nowrap="">
+                        <a class="btn btn-info" href="{ url 'editar_cidade' cidade.id }">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a class="btn btn-danger" href="{ url 'remover_cidade' cidade.id }">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+               </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <a href="{% url 'cadastrar_especialidade' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Especialidade"></a>
 

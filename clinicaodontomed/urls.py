@@ -21,8 +21,10 @@ urlpatterns = [ # onde aponto meu APP/diretorio/template e suas URLS que vai ser
     path('admin/', admin.site.urls), # página do admin
     path('', include('home.urls')), # pág principal
     path('home/', include('home.urls')), # além da Pág Principal Aqui tenho a rota para o localhost:8000/teste ; localhost:8000/marcelo ...
+    #path('home/', include('django.contrib.auth.urls')),
     path('caixa/', include('caixa.urls')),
     path('profissional/', include('profissional.urls')),
+    #path('account/', include('django.contrib.auth.urls')),
 ]
 
 

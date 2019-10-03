@@ -1,13 +1,30 @@
 {% extends 'adminlte/base.html' %}
 
 {% load meus_filtros %}
-
-
-{% load static %}
-
-
 {% block content %}
 
-{{ form_especialidade.especialidade|addclass:'form-control' }}
+<div class="box box-primary">
+    <div class="box-header box-body">
+        <h1 class="box-title">Cadastro de Especialidade</h1>
+    </div>
+</div>
+
+<div class="box box-success">
+    <div class="box-body">
+        <form method="POST">
+        {% csrf_token %}
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Especialidade:</label>
+                    {{ form_especialidade.especialidade|addclass:'form-control' }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Salvar">
+            </div>
+        </form>
+    </div>
+</div>
 
 {% endblock content %}

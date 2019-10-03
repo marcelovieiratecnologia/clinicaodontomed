@@ -6,43 +6,56 @@
     Cadastro de Profissional
 {% endblock %}
 
-
 {% block content %}
+<div class="box box-primary">
+    <div class="box-header box-body">
+        <h1 class="box-title">Cadastro de Profissional</h1>
+    </div>
+</div>
 
-<form method="post">
+<div class="box box-success">
+    <div class="box-body">
+        <form method="post">
 
-    {% csrf_token %}
+            {% csrf_token %}
 
-    <div class="form-group">
-        <label>Nome do Profissional: </label>
-        {{ form_profissional.nome_profissional|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
-        <label>CPF do Profissional: </label>
-        {{ form_profissional.cpf_profissional|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
-        <label>Registro da Classe: </label>
-        {{ form_profissional.num_registro_classe|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
-        <label>Cidade: </label>
-        {{ form_profissional.cidades|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
-        <label>Orgão Emissor: </label>
-        {{ form_profissional.orgao_emissor|addclass:'form-control' }}
-    </div>
-    <div class="form-group">
-        <label>Especialidade(s): </label>
-        {{ form_profissional.especialidades|addclass:'form-control' }}
-    </div>
+            <div class="row">
+                <div class="form-group col-md-10">
+                    <label>Nome do Profissional: </label>
+                    {{ form_profissional.nome_profissional|addclass:'form-control' }}
+                </div>
+                <div class="form-group col-md-2">
+                    <label>CPF do Profissional: </label>
+                    {{ form_profissional.cpf_profissional|addclass:'form-control' }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Reg. da Classe: </label>
+                    {{ form_profissional.num_registro_classe|addclass:'form-control' }}
+                </div>
 
-    <div class="form-group">
-        <input class="btn btn-primary" type="submit" value="Salvar">
+                <div class="form-group col-md-5">
+                    <label>Cidade: </label>
+                    {{ form_profissional.cidades|addclass:'form-control' }}
+                </div>
+
+                <div class="form-group col-md-5">
+                    <label>Orgão Emissor: </label>
+                    {{ form_profissional.orgao_emissor|addclass:'form-control' }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Especialidade(s): </label>
+                {{ form_profissional.especialidades|addclass:'form-control' }}
+            </div>
+
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Salvar">
+            </div>
+        </form>
     </div>
+</div>
 
-
-</form>
 
 {% endblock content %}

@@ -1,18 +1,43 @@
+from django.db.models import Sum, Aggregate, Avg
+from datetime import datetime, date
+
 from ..models import EntradaSaida
 
-def cadastrar_entrada_saida(entrada_saida):
-		entrada_saida_bd = EntradaSaida.objects.create(dt_movimentacao=entrada_saida.dt_movimentacao, profissional=entrada_saida.profissional, paciente=entrada_saida.paciente,
-																qt_parcelas=entrada_saida.qt_parcelas, valor_entr_saida=entrada_saida.valor_entr_saida,tp_entrada=entrada_saida.tp_entrada,
-																tp_convenio=entrada_saida.tp_convenio, tp_pagamento=entrada_saida.tp_pagamento, tp_credito=entrada_saida.tp_credito,
-																tp_porcentagem=entrada_saida.tp_porcentagem,observacao=entrada_saida.observacao, motivo=entrada_saida.motivo,
-																fkprofissional=entrada_saida.fkprofissional, fkespecialidades=entrada_saida.fkespecialidades)
-		entrada_saida_bd.save()
 
 def listar_entrada_saida():
-		return EntradaSaida.objects.all()
+		data = datetime.now()
+		return EntradaSaida.objects.filter(dt_movimentacao=data)
+		# return EntradaSaida.objects.all()
+		
+def listar_entrada_saida_data(data): # Listo sempre o mes corrente
+		# return EntradaSaida.objects.all()
+		return EntradaSaida.objects.filter(dt_movimentacao=data)
+
+def listar_entrada_saida_anomes(ano,mes):
+		# ano = date.year
+		# mes = date.month
+		return EntradaSaida.objects.filter(dt_movimentacao__year=ano).filter(dt_movimentacao__month=mes)
+
 
 def listar_entrada_saida_id(id):
 		return EntradaSaida.objects.get(id=id)
+
+
+def cadastrar_entrada_saida(entrada_saida):
+		entrada_saida_bd = EntradaSaida.objects.create(dt_movimentacao=entrada_saida.dt_movimentacao,
+																									 profissional=entrada_saida.profissional,
+																									 paciente=entrada_saida.paciente,
+																									 qt_parcelas=entrada_saida.qt_parcelas,
+																									 valor_entr_saida=entrada_saida.valor_entr_saida,
+																									 tp_entrada=entrada_saida.tp_entrada,
+																									 tp_convenio=entrada_saida.tp_convenio,
+																									 tp_pagamento=entrada_saida.tp_pagamento,
+																									 tp_credito=entrada_saida.tp_credito,
+																									 tp_porcentagem=entrada_saida.tp_porcentagem,
+																									 observacao=entrada_saida.observacao, motivo=entrada_saida.motivo,
+																									 fkprofissional=entrada_saida.fkprofissional,
+																									 fkespecialidades=entrada_saida.fkespecialidades)
+		entrada_saida_bd.save()
 
 def editar_entrada_saida(entrada_saida_bd, entrada_saida_nova):
 		entrada_saida_bd.dt_movimentacao = entrada_saida_nova.dt_movimentacao
@@ -33,3 +58,23 @@ def editar_entrada_saida(entrada_saida_bd, entrada_saida_nova):
 		
 def remover_entrada_saida(entrada_saida_bd):
 		entrada_saida_bd.delete()
+
+
+		
+# Estou usando um for na VIEW
+# def calcula_total_final():
+# 		total_final = EntradaSaida.objects.all().aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+# 		# desconto_final = EntradaSaida.objects.all().aggregate(Sum('__desconto')).get('desconto__sum')
+# 		return total_final
+
+# Vai ser um tipo de total que vou deixar em cima do DatTable
+def calcula_total_entrada():
+		total_entrada = EntradaSaida.objects.all().aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+		# desconto_final = EntradaSaida.objects.all().aggregate(Sum('__desconto')).get('desconto__sum')
+		return total_entrada
+
+# Vai ser um tipo de total que vou deixar em cima do DatTable
+def calcula_total_saida():
+		total_saida = EntradaSaida.objects.all().aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+		# desconto_final = EntradaSaida.objects.all().aggregate(Sum('__desconto')).get('desconto__sum')
+		return total_saida
