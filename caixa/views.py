@@ -7,8 +7,24 @@ from profissional.services import especialidades_service
 from datetime import date, datetime
 from decimal import *
 
+
 def index(request):
 		return render_to_response()
+
+def listar_especialidades_profissional(request):
+
+		print('estou na view')
+
+
+		id_fkprofissional = request.GET.get('id_fkprofissional')
+		print('ssssssssssssssssssssssssssssssssssssssss',id_fkprofissional)
+
+		idprofissional = request.GET.get('idprofissional')
+		especialidades_profissional = profissional_service.listar_especialidades_profissional(idprofissional)
+		context = {'especialidades_profissional': especialidades_profissional}
+		return  render(request, 'caixa/includes/_especialidadesprofissional.html', context)
+		
+		
 
 def listar_entrada_saida_anomes(request):
 		
@@ -17,6 +33,7 @@ def listar_entrada_saida_anomes(request):
 		mes = anomes[:-5] # pego o mes da string '09/2019'
 		
 		entradas_saidas = entrada_saida_service.listar_entrada_saida_anomes(ano, mes)
+		
 		total_bruto_final = 0.00
 		total_desconto_final = 0.00
 		total_liquido_final = 0.00
@@ -27,13 +44,16 @@ def listar_entrada_saida_anomes(request):
 								float(entrada_saida.valor_entr_saida) * float(entrada_saida.tp_porcentagem)) / 100
 		
 		total_liquido_final = + total_bruto_final - total_desconto_final
-		
+		total_mes_entrada = entrada_saida_service.calcula_total_entrada()
+		total_mes_saida = entrada_saida_service.calcula_total_saida()
 		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas,
 																															 "total_bruto_final": round(total_bruto_final, 2),
 																															 "total_desconto_final": round(total_desconto_final, 2),
-																															 "total_liquido_final": round(total_liquido_final, 2)
+																															 "total_liquido_final": round(total_liquido_final, 2),
+																															 "total_mes_entrada": round(total_mes_entrada, 2),
+																															 "total_mes_saida": round(total_mes_saida, 2),
 																															 })
-		
+
 def listar_entrada_saida_data(request):
 		
 		dt = request.GET.get('datepicker_filter')
@@ -50,15 +70,17 @@ def listar_entrada_saida_data(request):
 										float(entrada_saida.valor_entr_saida) * float(entrada_saida.tp_porcentagem)) / 100
 		
 		total_liquido_final = + total_bruto_final - total_desconto_final
-		
+		total_mes_entrada = entrada_saida_service.calcula_total_entrada()
+		total_mes_saida = entrada_saida_service.calcula_total_saida()
 		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas,
 																															 "total_bruto_final": round(total_bruto_final, 2),
 																															 "total_desconto_final": round(total_desconto_final, 2),
-																															 "total_liquido_final": round(total_liquido_final, 2)
+																															 "total_liquido_final": round(total_liquido_final, 2),
+																															 "total_mes_entrada": round(total_mes_entrada, 2),
+																															 "total_mes_saida": round(total_mes_saida, 2),
 																															 })
 
 def listar_entrada_saida(request):
-		# total_bruto_final = entrada_saida_service.calcula_total_final() #### Preferi usar no for
 		
 		entradas_saidas = entrada_saida_service.listar_entrada_saida()
 		total_bruto_final = 0.00
@@ -70,14 +92,18 @@ def listar_entrada_saida(request):
 				total_desconto_final = total_desconto_final + (float(entrada_saida.valor_entr_saida) * float(entrada_saida.tp_porcentagem)) / 100
 
 		total_liquido_final = + total_bruto_final - total_desconto_final
-
+		total_mes_entrada = entrada_saida_service.calcula_total_entrada()
+		total_mes_saida = entrada_saida_service.calcula_total_saida()
 		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas,
-																															 "total_bruto_final": round(total_bruto_final,2),
-																															 "total_desconto_final": round(total_desconto_final,2),
-																															 "total_liquido_final": round(total_liquido_final,2)
+																															 "total_bruto_final": round(total_bruto_final, 2),
+																															 "total_desconto_final": round(total_desconto_final, 2),
+																															 "total_liquido_final": round(total_liquido_final, 2),
+																															 "total_mes_entrada": round(total_mes_entrada, 2),
+																															 "total_mes_saida": round(total_mes_saida, 2),
 																															 })
 
 def cadastrar_entrada_saida(request):
+
 		context = {}
 		profissionais = profissional_service.listar_profissional()
 		especialidades = especialidades_service.listar_especialidade()

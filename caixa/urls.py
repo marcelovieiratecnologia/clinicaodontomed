@@ -15,4 +15,5 @@ urlpatterns = [
 		path('remover_entrada_saida/<int:id>', remover_entrada_saida, name='remover_entrada_saida'), # <int:id> isso quer dizer que estou passando o parametro no qual meu metodo da view precisa
 		path('listar_entrada_saida_data/', listar_entrada_saida_data, name='listar_entrada_saida_data'),
 		path('listar_entrada_saida_anomes/', listar_entrada_saida_anomes, name='listar_entrada_saida_anomes'),
+		path('listar_especialidades_profissional/', listar_especialidades_profissional, name='listar_especialidades_profissional'),
 ]

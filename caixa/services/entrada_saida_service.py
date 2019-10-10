@@ -3,25 +3,18 @@ from datetime import datetime, date
 
 from ..models import EntradaSaida
 
-
 def listar_entrada_saida():
 		data = datetime.now()
 		return EntradaSaida.objects.filter(dt_movimentacao=data)
-		# return EntradaSaida.objects.all()
 		
 def listar_entrada_saida_data(data): # Listo sempre o mes corrente
-		# return EntradaSaida.objects.all()
 		return EntradaSaida.objects.filter(dt_movimentacao=data)
 
 def listar_entrada_saida_anomes(ano,mes):
-		# ano = date.year
-		# mes = date.month
 		return EntradaSaida.objects.filter(dt_movimentacao__year=ano).filter(dt_movimentacao__month=mes)
-
-
+		
 def listar_entrada_saida_id(id):
 		return EntradaSaida.objects.get(id=id)
-
 
 def cadastrar_entrada_saida(entrada_saida):
 		entrada_saida_bd = EntradaSaida.objects.create(dt_movimentacao=entrada_saida.dt_movimentacao,
@@ -59,22 +52,24 @@ def editar_entrada_saida(entrada_saida_bd, entrada_saida_nova):
 def remover_entrada_saida(entrada_saida_bd):
 		entrada_saida_bd.delete()
 
-
-		
 # Estou usando um for na VIEW
 # def calcula_total_final():
 # 		total_final = EntradaSaida.objects.all().aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
 # 		# desconto_final = EntradaSaida.objects.all().aggregate(Sum('__desconto')).get('desconto__sum')
 # 		return total_final
 
-# Vai ser um tipo de total que vou deixar em cima do DatTable
+# Vai ser um tipo de total que vou deixar em cima do DataTable
 def calcula_total_entrada():
-		total_entrada = EntradaSaida.objects.all().aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+		total_entrada_mes = EntradaSaida.objects.filter(tp_entrada='ENTRADA').aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+		if total_entrada_mes == None:
+				total_entrada_mes = 0.00
 		# desconto_final = EntradaSaida.objects.all().aggregate(Sum('__desconto')).get('desconto__sum')
-		return total_entrada
+		return total_entrada_mes
 
 # Vai ser um tipo de total que vou deixar em cima do DatTable
 def calcula_total_saida():
-		total_saida = EntradaSaida.objects.all().aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+		total_saida_mes = EntradaSaida.objects.filter(tp_entrada='SAIDA').aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+		if total_saida_mes == None:
+				total_saida_mes = 0.00
 		# desconto_final = EntradaSaida.objects.all().aggregate(Sum('__desconto')).get('desconto__sum')
-		return total_saida
+		return total_saida_mes

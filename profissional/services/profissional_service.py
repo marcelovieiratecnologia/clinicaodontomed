@@ -2,13 +2,23 @@ from django.db import connection
 from ..models import Profissionais, Especialidades
 from ..services import especialidades_service
 
+
+def listar_especialidades_profissional(id):
+		# Lista quais os profissionais da especialidade que escolhi
+		# profespe = Profissionais.objects.filter(especialidades__id=2)
+		# print('Profissionais da especialidade', profespe)
+		
+		# Lista as especialidades do profissional que escolhi
+		especialidades_profissional = Especialidades.objects.filter(profissionais__id=id)
+		return especialidades_profissional
+
+
 def listar_profissional():
 		#return Profissionais.objects.all()
 		profissionais = Profissionais.objects.select_related('orgao_emissor').all()  #foreingn KEY
 		#profissionais = Profissionais.objects.prefetch_related('especialidades').all()
 		return profissionais
 		
-
 def listar_profissional_id(id):
 		profissional = Profissionais.objects.get(id=id)
 		for i in profissional.especialidades.all():

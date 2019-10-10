@@ -5,130 +5,156 @@
 {% endblock %}
 
 {% block content %}
-<div class="box box-primary">
-    <div class="box-header box-body">
-        <div class="pull-left col-md-10">
-            <h1 class="box-title">Lista de Entradas e Saídas</h1>
-        </div>
-        <div class="pull-rigth col-md-2">
-            <a href="{% url 'cadastrar_entrada_saida' %}">
-                <input type="button" class="btn btn-primary mb3" value="Cadastrar Entrada Saida">
-            </a>
+
+<div class="row">
+<div class="col-md-6">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Lista de Entradas e Saídas</h3>
         </div>
     </div>
 </div>
 
-<div class="box box-info">
-    <div class="box-header">
-<!--        <div class="pull-left col-md-10">-->
-<!--            <h1 class="box-title">Filtros</h1>-->
-<!--        </div>-->
-        <div class="form-group">
-            <div class="col-md-3">
-                <form action="{% url 'listar_entrada_saida_data' %}" method="GET">
-                    <div class="input-group">
-                        <div class="input-group-addon input-group margin">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                            <input type="text" placeholder="Data para Pesquisa" class="form-control" id="datepicker_filter" name="datepicker_filter" readonly>
-                            <span class="input-group-btn">
-                                <button class="btn btn-info" id="btndata" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
+<div class="col-md-3">
+    <div class="widget-user-header bg-green">
+        <div class="info-box-content">
+            <span class="info-box-text">TOTAL ENTRADAS</span>
+            <span class="info-box-number">{{ total_mes_entrada }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="widget-user-header bg-red">
+        <div class="info-box-content">
+            <span class="info-box-text">TOTAL SAÍDAS</span>
+            <span class="info-box-number">{{ total_mes_saida }}</span>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="box-header">
+        <!--        <div class="pull-left col-md-10">-->
+        <!--            <h1 class="box-title">Filtros</h1>-->
+        <!--        </div>-->
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <form action="{% url 'listar_entrada_saida_data' %}" method="GET">
+                            <div class="input-group">
+                                <div class="input-group-addon input-group margin">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                    <input type="text" placeholder="Data para Pesquisa" class="form-control" id="datepicker_filter" name="datepicker_filter" readonly>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info" id="btndata" type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
 
-            <div class="col-md-3">
-                <form action="{% url 'listar_entrada_saida_anomes' %}" method="GET">
-                    <div class="input-group">
-                        <div class="input-group-addon input-group margin">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                            <input type="text" placeholder="Pesquisa por Mês e Ano" class="form-control" id="datepicker_month_filter" name="datepicker_month_filter" readonly>
-                            <span class="input-group-btn">
-                                <button class="btn btn-info" id="btndatames" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
+                    <div class="col-md-3">
+                        <form action="{% url 'listar_entrada_saida_anomes' %}" method="GET">
+                            <div class="input-group">
+                                <div class="input-group-addon input-group margin">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                    <input type="text" placeholder="Pesquisa por Mês e Ano" class="form-control" id="datepicker_month_filter" name="datepicker_month_filter" readonly>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info" id="btndatames" type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
+
             </div>
         </div>
-
     </div>
 </div>
 
-
-<div class="box box-success">
-    <div class="box-body">
-        <table id="myTableCaixa" class="table table-bordered table-hover" cellpadding="5" width="100%">
-            <thead>
-                <tr>
-                    <th>Entr/Saída</th>
-                    <th>Dt Movimento</th>
-                    <th>Profissional</th>
-                    <th>Especialidade</th>
-                    <th>Paciente</th>
-                    <th>Motivo</th>
-                    <th>Convênio</th>
-                    <th>Pagamento</th>
-                    <th>Créditos</th>
-                    <th>VLR BRUTO</th>
-                    <th>DESCONTO</th>
-                    <th>VLR LIQ</th>
-                    <th>AÇÔES</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for entrada_saida in entradas_saidas %}
-                <tr>
-                    <td>{{ entrada_saida.tp_entrada }}</td>
-                    <td>{{ entrada_saida.dt_movimentacao }}</td>
-                    <td>{{ entrada_saida.fkprofissional }}</td>
-                    <td>{{ entrada_saida.fkespecialidades }}</td>
-                    <td>{{ entrada_saida.paciente }}</td>
-                    <td>{{ entrada_saida.motivo }}</td>
-                    <td>{{ entrada_saida.tp_convenio }}</td>
-                    <td>{{ entrada_saida.tp_pagamento }}</td>
-                    <td>{{ entrada_saida.tp_credito }}</td>
-                    <td>{{ entrada_saida.valor }}</td>
-                    <td>{{ entrada_saida.desconto }}</td>
-                    <td>{{ entrada_saida.total }}</td>
-                    <td class="dt-body-center" nowrap="">
-                        <a class="btn btn-info" href="{% url 'editar_entrada_saida' entrada_saida.id %}">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                        <a class="btn btn-danger" href="{% url 'remover_entrada_saida' entrada_saida.id %}">
-                            <i class="fa fa-trash"></i>
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-                <tfoot>
-                    <tr style="background-color:#d3d3d3">
-                        <th>TOTAL GERAL</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th style="color:#FF0000">R$ {{ total_bruto_final }}</th>
-                        <th style="color:#006400">R$ {{ total_desconto_final }}</th>
-                        <th style="color:#FF0000">R$ {{ total_liquido_final }}</th>
-                        <th></th>
-                    </tr>
-                </tfoot>
-        </table>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="box-body">
+                <table id="myTableCaixa" class="table table-bordered table-hover" cellpadding="5" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Entr/Saída</th>
+                            <th>Dt Movimento</th>
+                            <th>Profissional</th>
+                            <th>Especialidade</th>
+                            <th>Paciente</th>
+                            <th>Motivo</th>
+                            <th>Convênio</th>
+                            <th>Pagamento</th>
+                            <th>Créditos</th>
+                            <th width="100px">VLR BRUTO</th>
+                            <th>DESCONTO</th>
+                            <th width="100px">VLR LIQ</th>
+                            <th>AÇÔES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for entrada_saida in entradas_saidas %}
+                        <tr>
+                            <td>{{ entrada_saida.tp_entrada }}</td>
+                            <td>{{ entrada_saida.dt_movimentacao }}</td>
+                            <td>{{ entrada_saida.fkprofissional }}</td>
+                            <td>{{ entrada_saida.fkespecialidades }}</td>
+                            <td>{{ entrada_saida.paciente }}</td>
+                            <td>{{ entrada_saida.motivo }}</td>
+                            <td>{{ entrada_saida.tp_convenio }}</td>
+                            <td>{{ entrada_saida.tp_pagamento }}</td>
+                            <td>{{ entrada_saida.tp_credito }}</td>
+                            <td>{{ entrada_saida.valor }}</td>
+                            <td>{{ entrada_saida.desconto }}</td>
+                            <td>{{ entrada_saida.total }}</td>
+                            <td class="dt-body-center" nowrap="">
+                                <a class="btn btn-info" href="{% url 'editar_entrada_saida' entrada_saida.id %}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a class="btn btn-danger" href="{% url 'remover_entrada_saida' entrada_saida.id %}">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                        <tfoot>
+                            <tr style="background-color:#d3d3d3">
+                                <th>TOTAL GERAL</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th style="color:#FF0000">R$ {{ total_bruto_final }}</th>
+                                <th style="color:#006400">R$ {{ total_desconto_final }}</th>
+                                <th style="color:#FF0000">R$ {{ total_liquido_final }}</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
-
-<a href="{% url 'cadastrar_entrada_saida' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Entrada Saida"></a>
+<div class="row">
+    <div class="btn btn-outline-primary">
+        <a href="{% url 'cadastrar_entrada_saida' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Entrada Saida"></a>
+</div>
 
 {% block js %}
 <!--colocar aqui meu bloco js -->
@@ -149,14 +175,11 @@
 <!--        window.location.assign(url);-->
 <!--    });-->
 
-
     $(function data() {
         $("#datepicker_month_filter").datepicker({
             format : 'mm/yyyy',
             autoclose : true,
-
         })
-
     });
 
 </script>

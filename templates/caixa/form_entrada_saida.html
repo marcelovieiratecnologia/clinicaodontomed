@@ -19,7 +19,10 @@
 <div class="box box-success">
     <div class="box-body">
 
-        <form method="post">
+        <form   id="myForm"
+                method="post"
+                data-urlEspecialidadesProfissional = "{% url 'listar_especialidades_profissional' %}"
+        >
 
             {% csrf_token %}
 
@@ -47,11 +50,19 @@
                     <label>Profissional: </label>
                         {{ form_entrada_saida.fkprofissional|addclass:'form-control' }}
                 </div>
-                <div class="form-group col-md-2">
-                    {{ form_entrada_saida.fkespecialidades.erros }}
-                    <label>Especialidade: </label>
-                        {{ form_entrada_saida.fkespecialidades|addclass:'form-control' }}
-                </div>
+
+<!--                <div class="form-group col-md-2">-->
+<!--                    {{ form_entrada_saida.fkespecialidades.erros }}-->
+<!--                    <label>Especialidade: </label>-->
+<!--                        {{ form_entrada_saida.fkespecialidades|addclass:'form-control' }}-->
+<!--                </div>-->
+
+                    <div class="form-group col-md-4" style="padding:10px;">
+                        <label for="idespecialidade">Especialidades Select</label>
+                        <select id="idespecialidade" class="form-control">
+                            <option>-------------------------</option>
+                        </select>
+                    </div>
 
             </div>
 
@@ -119,138 +130,75 @@
     </div>
 </div>
 
-{% endblock content %}
 
-                <!-- DropDOW - Fazendo os teste de filtrar o combo , na escolha do profissional trazer somente suas especialidades cadastradas
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        {{ form_entrada_saida.fkprofissional.erros }}
-                        <label>Profissionais: </label>
-                            {{ form_entrada_saida.fkprofissional|addclass:'form-control' }}
+            <form id="myFormSelect"
+                  method="GET"
+                  class="form-inline"
+                  data-url="{% url 'listar_especialidades_profissional' %}"
+            >
+                    <div class="row">
+
+                        <div class="form-group col-md-4" style="padding:10px;">
+                            <label for="idprofissional">Profissionais Select</label>
+                            <select id="idprofissional" class="form-control">
+                                <option {% for profissional in form_entrada_saida.fkprofissional %}> {{ profissional }} </option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-4" style="padding:10px;">
+                            <label for="idespecialidadeselect">Especialidades Select</label>
+                            <select id="idespecialidadeselect" class="form-control">
+                                <option>-------------------------</option>
+                            </select>
+                        </div>
+
                     </div>
-                </div>
-                 -->
+
+            </form>
 
 
-                <!--  TODO: começo de codigo para que consiga na escolha do combo profissional trazer somente seus especialidades no outro combo
-
-                <div class="row">
-
-                        <form id="myForm" method="GET"
-                              class="form-inline"
-                              data-urlEspecialidades="{{ especialidades.especialidade }}"
-                        >
-                            <div class="form-group col-md-2">
-                                <label for="profissionalSelect">Profissionais</label>
-                                    <select id="profissionalSelect">
-                                        <option>..............</option>
-                                        {% for profissional in profissionais %}
-                                            <option>
-                                                {{ profissional }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                            </div>
-
-                            <div class="form-group col-md-2">
-                                <label for="especialidadeSelect">Especialidades</label>
-                                <select id="especialidadeSelect">
-                                    <option>.................</option>
-                                    {% for especialidade in especialidades %}
-                                    <option value="{{ especialidade.pk }}">
-                                        {{ especialidade }}
-                                    </option>
-                                    {% endfor %}
-                                </select>
-
-                            </div>
-
-
-
-                            <div class="form-group col-md-2">
-                                <label for="idespecialidadeSelect">TESTE Especialidades</label>
-                                <select id="idespecialidadeSelect">
-                                    <option>.................</option>
-                                    {% for especialidade in profissional.especialidades.all %}
-                                    <option value="{{ especialidade.pk }}">
-                                       {{ especialidade.especialidade }}/
-                                    </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-
-
-                        </form>
-
-                </div>
-                -->
-
-<!--{ block javascript }  TODO: começo do javascript para roda a questão do combo profissional com seus espcialidade em outro combo-->
-
-<!--<script>-->
-<!--    $('#profissionalSelect').change(function(){-->
-<!--        let prof = $(this).val();  -->
-<!--        console.log(prof);-->
-<!--    });-->
-
-<!--&lt;!&ndash;</script>&ndash;&gt;-->
-<!--{ endblock javascript }-->
-
-<!--<br><br><br><br><br><br><br>-->
-<!-- TABLE Fazendo os teste de filtrar o combo , na escolha do profissional trazer somente suas especialidades cadastradas
-
-<form>
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="box">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td>Profissionais</td>
-                    </tr>
-                </thead>
-                {% for profissional in profissionais %}
-                    <tbody>
-                        <td>
-                            <a href=""
-                               class="profissional"
-                            >{{ profissional }}</a>
-                        </td>
-                    </tbody>
-                {% endfor %}
-            </table>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="box">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td>Especialidades</td>
-                    </tr>
-                </thead>
-                    {% for especialidade in especialidades %}
-                    <tbody>
-                        <td>{{ especialidade }}</td>
-                    </tbody>
-
-                    {% endfor %}
-            </table>
-            </div>
-        </div>
-    </div>
-</div>
-</form>
-
-
+{% block js %}
 <script>
-    È o meu Teste quee stou fazendo qdo for tabela
-    $('.profissional').on('click', function(event){
-        console.log('HELLO WORD');
-        event.preventDefault();
-    });
-</script>
 
--->
+    $("#idprofissional").change(function(){
+        let url = $('#myFormSelect').data('url');
+        let idprofissional  = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                idprofissional: idprofissional
+            },
+            success: function(response){
+                $('#idespecialidadeselect').html(response);
+            }
+        });
+    });
+
+
+    $('#id_fkprofissional').change(function(){
+
+        let urlEspecialidadesProfissional = $('#myForm').attr('data-urlEspecialidadesProfissional');
+        let id_fkprofissional = $(this).val();
+        console.log(urlEspecialidadesProfissional);
+        console.log(id_fkprofissional);
+
+        $.ajax({
+            urlEspecialidadesProfissional: urlEspecialidadesProfissional,
+            data:{
+                id_fkprofissional: id_fkprofissional
+            },
+            success: function(response){
+                        console.log('oi');
+                $('#idespecialidade').html(response);
+            }
+
+        });
+    });
+
+</script>
+{% endblock js %}
+
+{% endblock content %}
