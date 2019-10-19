@@ -39,6 +39,7 @@ class EntradaSaida(models.Model):
 				('APRAZO',u'A Prazo'),
 		)
 		TP_PORCENTAGEM = (
+				('0.00',u'0.00%'),
 				('2.68', u'2.68%'),
 				('7.07', u'7.07%'),
 				('8.51', u'8.51%'),
@@ -49,7 +50,7 @@ class EntradaSaida(models.Model):
 		profissional=models.CharField(verbose_name='Profissional',max_length=130,blank=True)
 		paciente=models.CharField(verbose_name='Paciente',max_length=130,blank=True)
 		qt_parcelas=models.IntegerField(verbose_name='Quantidade de Parcelas',default=0)
-		valor_entr_saida=models.DecimalField(verbose_name='Valor',max_digits=14,decimal_places=2,default=0)
+		valor_entr_saida=models.DecimalField(verbose_name='Valor',max_digits=14,decimal_places=2,default=0.00, blank=True)
 		tp_entrada=models.CharField(verbose_name='Tipos de Entrada', max_length=10, choices=TP_ENTRADA)
 		tp_convenio = models.CharField(verbose_name='Tipos de Convênios', max_length=30, choices=TP_CONVENIO, blank=True, null=True)
 		tp_pagamento = models.CharField(verbose_name='Tipos de Pagamentos', max_length=30, choices=TP_PAGAMENTO, blank=True, null=True)

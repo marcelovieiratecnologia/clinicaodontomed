@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class="row">
-<div class="col-md-6">
+<div class="col-md-8">
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Lista de Entradas e Saídas</h3>
@@ -15,26 +15,26 @@
     </div>
 </div>
 
-<div class="col-md-3">
+<div class="col-md-2">
     <div class="widget-user-header bg-green">
         <div class="info-box-content">
-            <span class="info-box-text">TOTAL ENTRADAS</span>
+            <span class="info-box-text">ENTRADAS NO MÊS</span>
             <span class="info-box-number">{{ total_mes_entrada }}</span>
         </div>
     </div>
 </div>
 
-<div class="col-md-3">
+<div class="col-md-2">
     <div class="widget-user-header bg-red">
         <div class="info-box-content">
-            <span class="info-box-text">TOTAL SAÍDAS</span>
+            <span class="info-box-text">SAÍDAS NO MÊS</span>
             <span class="info-box-number">{{ total_mes_saida }}</span>
         </div>
     </div>
 </div>
 </div>
 
-
+<!--Campo de pesquisa-->
 <div class="row">
     <div class="col-md-12">
         <div class="box box-info">
@@ -49,7 +49,7 @@
                                 <div class="input-group-addon input-group margin">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                    <input type="text" placeholder="Data para Pesquisa" class="form-control" id="datepicker_filter" name="datepicker_filter" readonly>
+                                    <input type="text" placeholder="Pesquisa por Data Específica" class="form-control" id="datepicker_filter" name="datepicker_filter" readonly>
                                     <span class="input-group-btn">
                                         <button class="btn btn-info" id="btndata" type="submit">
                                             <i class="fa fa-search"></i>
@@ -65,7 +65,7 @@
                                 <div class="input-group-addon input-group margin">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                    <input type="text" placeholder="Pesquisa por Mês e Ano" class="form-control" id="datepicker_month_filter" name="datepicker_month_filter" readonly>
+                                    <input type="text" placeholder="Pesquisa por Mês/Ano" class="form-control" id="datepicker_month_filter" name="datepicker_month_filter" readonly>
                                     <span class="input-group-btn">
                                         <button class="btn btn-info" id="btndatames" type="submit">
                                             <i class="fa fa-search"></i>
@@ -89,7 +89,7 @@
                     <thead>
                         <tr>
                             <th>Entr/Saída</th>
-                            <th>Dt Movimento</th>
+                            <th>Data</th>
                             <th>Profissional</th>
                             <th>Especialidade</th>
                             <th>Paciente</th>
@@ -167,13 +167,6 @@
         });
     });
 
-<!-- Estava Usando para executar o evento do click do botão -->
-<!--    $("#btndata").on('click', function(env){-->
-<!--        env.preventDefault();-->
-<!--        var dt = $("#datepicker_filter").val();-->
-<!--        var url = "{% url 'listar_entrada_saida_data' %}";-->
-<!--        window.location.assign(url);-->
-<!--    });-->
 
     $(function data() {
         $("#datepicker_month_filter").datepicker({
@@ -181,6 +174,15 @@
             autoclose : true,
         })
     });
+
+
+<!-- Estava Usando para executar o evento do click do botão -->
+<!--    $("#btndata").on('click', function(env){-->
+<!--        env.preventDefault();-->
+<!--        var dt = $("#datepicker_filter").val();-->
+<!--        var url = "{% url 'listar_entrada_saida_data' %}";-->
+<!--        window.location.assign(url);-->
+<!--    });-->
 
 </script>
 

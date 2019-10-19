@@ -6,7 +6,7 @@ from profissional.models import Profissionais
 
 
 class EntradaSaidaForm(forms.ModelForm):
-		#profissionais = forms.ModelChoiceField(queryset=Profissionais.objects.all())
+		# profissionais = forms.ModelChoiceField(queryset=Profissionais.objects.all())
 		class Meta:
 				model = EntradaSaida
 				#fields = '__all__'

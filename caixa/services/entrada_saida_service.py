@@ -3,6 +3,8 @@ from datetime import datetime, date
 
 from ..models import EntradaSaida
 
+data = datetime.now()
+
 def listar_entrada_saida():
 		data = datetime.now()
 		return EntradaSaida.objects.filter(dt_movimentacao=data)
@@ -14,7 +16,12 @@ def listar_entrada_saida_anomes(ano,mes):
 		return EntradaSaida.objects.filter(dt_movimentacao__year=ano).filter(dt_movimentacao__month=mes)
 		
 def listar_entrada_saida_id(id):
-		return EntradaSaida.objects.get(id=id)
+		
+		entrada_saida_id = EntradaSaida.objects.get(id=id)
+		
+		# especialidade = Entrada.objects.get
+		# print('ssssssssssssssss', entrada_saida_id.fkespecialidades)
+		return entrada_saida_id
 
 def cadastrar_entrada_saida(entrada_saida):
 		entrada_saida_bd = EntradaSaida.objects.create(dt_movimentacao=entrada_saida.dt_movimentacao,
@@ -60,7 +67,7 @@ def remover_entrada_saida(entrada_saida_bd):
 
 # Vai ser um tipo de total que vou deixar em cima do DataTable
 def calcula_total_entrada():
-		total_entrada_mes = EntradaSaida.objects.filter(tp_entrada='ENTRADA').aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+		total_entrada_mes = EntradaSaida.objects.filter(tp_entrada='ENTRADA', dt_movimentacao__year=data.year, dt_movimentacao__month=data.month).aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
 		if total_entrada_mes == None:
 				total_entrada_mes = 0.00
 		# desconto_final = EntradaSaida.objects.all().aggregate(Sum('__desconto')).get('desconto__sum')
@@ -68,7 +75,7 @@ def calcula_total_entrada():
 
 # Vai ser um tipo de total que vou deixar em cima do DatTable
 def calcula_total_saida():
-		total_saida_mes = EntradaSaida.objects.filter(tp_entrada='SAIDA').aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+		total_saida_mes = EntradaSaida.objects.filter(tp_entrada='SAIDA', dt_movimentacao__year=data.year, dt_movimentacao__month=data.month).aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
 		if total_saida_mes == None:
 				total_saida_mes = 0.00
 		# desconto_final = EntradaSaida.objects.all().aggregate(Sum('__desconto')).get('desconto__sum')

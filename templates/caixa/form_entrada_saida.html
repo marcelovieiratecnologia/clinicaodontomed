@@ -19,10 +19,7 @@
 <div class="box box-success">
     <div class="box-body">
 
-        <form   id="myForm"
-                method="post"
-                data-urlEspecialidadesProfissional = "{% url 'listar_especialidades_profissional' %}"
-        >
+        <form id="myForm" method="POST">
 
             {% csrf_token %}
 
@@ -32,6 +29,13 @@
                     <label>Dt Movimentação: </label>
                         {{ form_entrada_saida.dt_movimentacao|addclass:'form-control' }}
                 </div>
+                <div class="form-group col-md-3">
+                    {{ form_entrada_saida.tp_entrada.erros }}
+                    <label>Entrada/Saída: </label>
+                        {{ form_entrada_saida.tp_entrada|addclass:'form-control' }}
+                </div>
+            </div>
+            <div class="row">
                 <div class="form-group col-md-8">
                     {{ form_entrada_saida.paciente.erros }}
                     <label>Nome do Paciente: </label>
@@ -50,17 +54,38 @@
                     <label>Profissional: </label>
                         {{ form_entrada_saida.fkprofissional|addclass:'form-control' }}
                 </div>
-
 <!--                <div class="form-group col-md-2">-->
 <!--                    {{ form_entrada_saida.fkespecialidades.erros }}-->
 <!--                    <label>Especialidade: </label>-->
 <!--                        {{ form_entrada_saida.fkespecialidades|addclass:'form-control' }}-->
 <!--                </div>-->
 
-                    <div class="form-group col-md-4" style="padding:10px;">
-                        <label for="idespecialidade">Especialidades Select</label>
-                        <select id="idespecialidade" class="form-control">
-                            <option>-------------------------</option>
+
+<!--                <div class="form-group col-md-2">-->
+<!--                    {{ form_entrada_saida.fkespecialidades.erros }}-->
+<!--                    <label>Especialidade: </label>-->
+<!--                        {{ fkespecialidades }}-->
+<!--                </div>-->
+
+                    <div class="form-group col-md-4">
+                        {{ form_entrada_saida.fkespecialidades.erros }}
+                        <label for="fkespecialidades">Especialidades:</label>
+                        <select id="fkespecialidades" name="fkespecialidades" class="form-control">
+
+<!--                            {% if especialidade  %}-->
+                                <option value="{{ especialidade.pk }}">{{ especialidade }}</option> <!-- Nesse IF Carrego o combo com a especialidade que foi salva no banco -->
+<!--                            {% else %}-->
+<!--                                <option>Primeiro escolha o Profissional</option>  &lt;!&ndash; Se por algum motivo esta vindo sem especialidade traz o texto dizendo para escolher &ndash;&gt;-->
+<!--                            {% endif %}-->
+
+<!--                            {% for especialidade in id_fkespecialidades %}-->
+<!--                            <option value="{{ especialidade.pk }}">{{ especialidade }}</option> &lt;!&ndash; Esse FOR vai preencher o combo com as especialidades relacionadas com o profissional &ndash;&gt;-->
+<!--                            {% endfor %}-->
+
+                            {% for especialidade in id_fkespecialidades %}
+                            <option value="{{ especialidade.pk }}">{{ especialidade }}</option> <!-- Esse FOR vai preencher o combo com as especialidades relacionadas com o profissional -->
+                            {% endfor %}
+
                         </select>
                     </div>
 
@@ -84,11 +109,6 @@
                     {{ form_entrada_saida.valor_entr_saida.erros }}
                     <label>Vlr Entrada: </label>
                         {{ form_entrada_saida.valor_entr_saida|addclass:'form-control' }}
-                </div>
-                <div class="form-group col-md-3">
-                    {{ form_entrada_saida.tp_entrada.erros }}
-                    <label>Entrada/Saída: </label>
-                        {{ form_entrada_saida.tp_entrada|addclass:'form-control' }}
                 </div>
                 <div class="form-group col-md-3">
                     {{ form_entrada_saida.tp_convenio.erros}}
@@ -125,77 +145,73 @@
 
             <div class="form-group">
                 <input class="btn btn-primary" type="submit" value="Salvar">
+                <a href="{{request.META.HTTP_REFERER}}" class="btn btn-success">Cancelar</a>
             </div>
+
         </form>
     </div>
 </div>
 
+<!--  Teste Com o Atriibuto sendo passado na contrução do form , deu certo , porém tiver que deixar o form como POST e usar o AJAX com GET para não atrapalhar  -->
+<!--            <form id="myFormSelect"-->
+<!--                  method="GET"-->
+<!--                  class="form-inline"-->
+<!--                  data-url="{% url 'listar_especialidades_profissional' %}"-->
+<!--            >-->
+<!--                    <div class="row">-->
 
-            <form id="myFormSelect"
-                  method="GET"
-                  class="form-inline"
-                  data-url="{% url 'listar_especialidades_profissional' %}"
-            >
-                    <div class="row">
+<!--                        <div class="form-group col-md-4" style="padding:10px;">-->
+<!--                            <label for="idprofissional">Profissionais Select</label>-->
+<!--                            <select id="idprofissional" class="form-control">-->
+<!--                                <option {% for profissional in form_entrada_saida.fkprofissional %}> {{ profissional }} </option>-->
+<!--                                {% endfor %}-->
 
-                        <div class="form-group col-md-4" style="padding:10px;">
-                            <label for="idprofissional">Profissionais Select</label>
-                            <select id="idprofissional" class="form-control">
-                                <option {% for profissional in form_entrada_saida.fkprofissional %}> {{ profissional }} </option>
-                                {% endfor %}
+<!--                            </select>-->
+<!--                        </div>-->
 
-                            </select>
-                        </div>
+<!--                        <div class="form-group col-md-4" style="padding:10px;">-->
+<!--                            <label for="idespecialidadeselect">Especialidades Select</label>-->
+<!--                            <select id="idespecialidadeselect" class="form-control">-->
+<!--                                <option>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
 
-                        <div class="form-group col-md-4" style="padding:10px;">
-                            <label for="idespecialidadeselect">Especialidades Select</label>
-                            <select id="idespecialidadeselect" class="form-control">
-                                <option>-------------------------</option>
-                            </select>
-                        </div>
+<!--                    </div>-->
 
-                    </div>
-
-            </form>
+<!--            </form>-->
 
 
 {% block js %}
 <script>
 
-    $("#idprofissional").change(function(){
-        let url = $('#myFormSelect').data('url');
-        let idprofissional  = $(this).val();
-
-        $.ajax({
-            url: url,
-            data: {
-                idprofissional: idprofissional
-            },
-            success: function(response){
-                $('#idespecialidadeselect').html(response);
-            }
-        });
-    });
+<!--Estava usando com o atribuito URL no form, porem estava tendo problemas , fiz outro abaixo passando a URL no AJAX-->
+<!--    $("#idprofissional").change(function(){-->
+<!--        let url = $('#myFormSelect').data('url');-->
+<!--        let idprofissional  = $(this).val();-->
+<!--        $.ajax({-->
+<!--            url: url,-->
+<!--            data: {-->
+<!--                idprofissional: idprofissional-->
+<!--            },-->
+<!--            success: function(response){-->
+<!--                $('#idespecialidadeselect').html(response);-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
 
 
     $('#id_fkprofissional').change(function(){
-
-        let urlEspecialidadesProfissional = $('#myForm').attr('data-urlEspecialidadesProfissional');
         let id_fkprofissional = $(this).val();
-        console.log(urlEspecialidadesProfissional);
-        console.log(id_fkprofissional);
-
         $.ajax({
-            urlEspecialidadesProfissional: urlEspecialidadesProfissional,
-            data:{
+            url: "{% url 'listar_especialidades_profissional' %}",
+            type: 'GET',
+            data: {
                 id_fkprofissional: id_fkprofissional
             },
             success: function(response){
-                        console.log('oi');
-                $('#idespecialidade').html(response);
+                $('#fkespecialidades').html(response)
             }
-
-        });
+        })
     });
 
 </script>

@@ -1,3 +1,6 @@
+blessed==1.15.0
+colorama==0.4.1
+datatable==0.9.0
 Django==2.2.3
 django-adminlte2==0.4.1
 django-extensions==2.2.1
@@ -7,3 +10,5 @@ python-stdnum==1.11
 pytz==2019.1
 six==1.12.0
 sqlparse==0.3.0
+typesentry==0.2.7
+wcwidth==0.1.7

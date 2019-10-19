@@ -29,10 +29,10 @@
                 <tr>
                     <td>{{ especialidade.especialidade }}</td>
                     <td nowrap="">
-                        <a class="btn btn-info" href="{ url 'editar_cidade' cidade.id }">
+                        <a class="btn btn-info" href="{% url 'editar_especialidade' especialidade.id %}">
                             <i class="fa fa-edit"></i>
                         </a>
-                        <a class="btn btn-danger" href="{ url 'remover_cidade' cidade.id }">
+                        <a class="btn btn-danger" href="{% url 'remover_especialidade' especialidade.id %}">
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>

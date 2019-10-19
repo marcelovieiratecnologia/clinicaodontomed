@@ -139,16 +139,19 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'pt-BR'
-
-TIME_ZONE = 'America/Sao_Paulo'
-
-USE_I18N = True
-
+# LANGUAGE_CODE = 'pt-BR'
+# TIME_ZONE = 'America/Sao_Paulo'
+# USE_I18N = False
+# USE_L10N = True
+# USE_TZ = False
+# USE_THOUSAND_SEPARATOR = True
+# DECIMAL_SEPARATOR = ','
+LANGUAGE_CODE = 'pt-br'
+USE_I18N = False
 USE_L10N = True
-
-USE_TZ = True
-
+DECIMAL_SEPARATOR = ','
+THOUSAND_SEPARATOR = '.'
+USE_THOUSAND_SEPARATOR = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

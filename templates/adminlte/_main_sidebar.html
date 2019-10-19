@@ -25,8 +25,8 @@
 
             {% block nav_links %}
                 <li>
-                    <a href="#">
-                        <i class="fa fa-dashboard"></i> <span>Example link</span>
+                    <a href="{% url 'charts' %}">
+                        <i class="fa fa-line-chart"></i> <span>Gráficos</span>
                     </a>
                 </li>
                 <li class="treeview">
@@ -75,6 +75,28 @@
 
                 <li class="treeview">
                     <a href="#">
+                        <i class="fa fa-medkit"></i> <span>Especialidades</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href=" {% url 'listar_especialidade' %} ">
+                                <i class="fa fa-list-ul"></i> Listar Especialidades
+                            </a>
+                        </li>
+                        <li>
+                            <a href=" {% url 'cadastrar_especialidade' %} ">
+                                <i class="fa fa-save"></i> Cadastrar Especialidade
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
                         <i class="fa fa-hospital-o"></i> <span>Cidades</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -89,28 +111,6 @@
                         <li>
                             <a href=" {% url 'cadastrar_cidade' %} ">
                                 <i class="fa fa-save"></i> Cadastrar Cidades
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
-
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-hospital-o"></i> <span>Especialidades</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href=" {% url 'listar_especialidade' %} ">
-                                <i class="fa fa-list-ul"></i> Listar Especialidades
-                            </a>
-                        </li>
-                        <li>
-                            <a href=" {% url 'cadastrar_especialidade' %} ">
-                                <i class="fa fa-save"></i> Cadastrar Especialidade
                             </a>
                         </li>
 

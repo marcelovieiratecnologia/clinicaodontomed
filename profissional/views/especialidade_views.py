@@ -22,30 +22,26 @@ def cadastrar_especialidade(request):
 				return render(request, 'especialidade/form_especialidade.html', {'form_especialidade': form_especialidade})
 
 
-# def editar_profissional(request, id):
-# 		profissional_antigo = profissional_service.listar_profissional_id(id)
-# 		form_profissional = ProfissionaisForm(request.POST or None, instance=profissional_antigo)
-# 		if form_profissional.is_valid():
-# 				nome_profissional = form_profissional.cleaned_data['nome_profissional']
-# 				cpf_profissional = form_profissional.cleaned_data['cpf_profissional']
-# 				num_registro_classe = form_profissional.cleaned_data['num_registro_classe']
-# 				cidades = form_profissional.cleaned_data['cidades']
-# 				orgao_emissor = form_profissional.cleaned_data['orgao_emissor']
-# 				especialidades = form_profissional.cleaned_data['especialidades']
-# 				profissional_nova = Profissional(nome_profissional=nome_profissional, cpf_profissional=cpf_profissional,num_registro_classe=num_registro_classe,
-# 																				 cidades=cidades,orgao_emissor=orgao_emissor,especialidades=especialidades)
-# 				profissional_service.editar_profissional(profissional_antigo, profissional_nova)
-# 				return redirect('listar_profissional')
-# 		return render(request, 'profissional/form_profissional.html', {'form_profissional': form_profissional})
-#
-# def remover_profissional(request,id):
-# 		profissional_bd = profissional_service.listar_profissional_id(id)
-# 		if request.method=="POST":
-# 				profissional_service.remover_profissional(profissional_bd)
-# 				return redirect('listar_profissional')
-# 		return render(request, 'profissional/confirma_exclusao.html', {'profissional': profissional_bd})
-#
-#
+def editar_especialidade(request, id):
+		especialidade_bd = especialidades_service.listar_especialidades_id(id)
+		form_especialidade = EspecialidadesForm(request.POST or None, instance=especialidade_bd)
+		if form_especialidade.is_valid():
+				especialidade = form_especialidade.cleaned_data['especialidade']
+				especialidade_nova = Especialidade(especialidade=especialidade)
+				especialidades_service.editar_especialidade(especialidade_bd, especialidade_nova)
+				return redirect('listar_especialidade')
+		return render(request, 'especialidade/form_especialidade.html', {'form_especialidade': form_especialidade})
+
+
+def remover_especialidade(request,id):
+		especialidade_bd = especialidades_service.listar_especialidades_id(id)
+		if request.method=="POST":
+				especialidades_service.remover_especialidade(especialidade_bd)
+				return redirect('listar_especialidade')
+		return render(request, 'especialidade/confirma_exclusao.html', {'especialidade': especialidade_bd})
+
+
+
 # # @@@@@@@@@ Cidade @@@@@@@@@
 # def listar_cidade(request):
 # 		cidades = cidade_service.listar_cidade()

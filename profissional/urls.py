@@ -15,6 +15,8 @@ urlpatterns = [
 		path('remover_cidade/<int:id>', remover_cidade, name='remover_cidade'),
 		path('listar_especialidade/', listar_especialidade, name='listar_especialidade'),
 		path('cadastrar_especialidade/', cadastrar_especialidade, name='cadastrar_especialidade'),
+		path('editar_especialidade/<int:id>', editar_especialidade, name='editar_especialidade'),
+		path('remover_especialidade/<int:id>', remover_especialidade, name='remover_especialidade'),
 ]
 
 

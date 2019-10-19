@@ -16,4 +16,5 @@ urlpatterns = [
 		path('listar_entrada_saida_data/', listar_entrada_saida_data, name='listar_entrada_saida_data'),
 		path('listar_entrada_saida_anomes/', listar_entrada_saida_anomes, name='listar_entrada_saida_anomes'),
 		path('listar_especialidades_profissional/', listar_especialidades_profissional, name='listar_especialidades_profissional'),
+		path('charts/', charts, name='charts'),
 ]

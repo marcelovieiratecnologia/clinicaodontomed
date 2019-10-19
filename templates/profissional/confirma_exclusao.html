@@ -21,7 +21,7 @@
             <form method="post">
                 {% csrf_token %}
                 <button class="btn btn-danger" type="submit">Remover</button>
-                <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary">Voltar</a>
+                <a href="{{request.META.HTTP_REFERER}}" class="btn btn-success">Cancelar</a>
             </form>
         </div>
 

@@ -5,6 +5,7 @@ from .services import entrada_saida_service
 from profissional.services import profissional_service
 from profissional.services import especialidades_service
 from datetime import date, datetime
+import ast
 from decimal import *
 
 
@@ -12,19 +13,10 @@ def index(request):
 		return render_to_response()
 
 def listar_especialidades_profissional(request):
-
-		print('estou na view')
-
-
-		id_fkprofissional = request.GET.get('id_fkprofissional')
-		print('ssssssssssssssssssssssssssssssssssssssss',id_fkprofissional)
-
-		idprofissional = request.GET.get('idprofissional')
-		especialidades_profissional = profissional_service.listar_especialidades_profissional(idprofissional)
+		id_fkprofissional = request.GET.get('id_fkprofissional') # vem do meu ajax
+		especialidades_profissional = profissional_service.listar_especialidades_profissional(id_fkprofissional)
 		context = {'especialidades_profissional': especialidades_profissional}
 		return  render(request, 'caixa/includes/_especialidadesprofissional.html', context)
-		
-		
 
 def listar_entrada_saida_anomes(request):
 		
@@ -40,8 +32,8 @@ def listar_entrada_saida_anomes(request):
 		
 		for entrada_saida in entradas_saidas:
 				total_bruto_final = total_bruto_final + float(entrada_saida.valor_entr_saida)
-				total_desconto_final = total_desconto_final + (
-								float(entrada_saida.valor_entr_saida) * float(entrada_saida.tp_porcentagem)) / 100
+				if entrada_saida.tp_porcentagem != None:
+						total_desconto_final = total_desconto_final + (float(entrada_saida.valor_entr_saida) * float(entrada_saida.tp_porcentagem)) / 100
 		
 		total_liquido_final = + total_bruto_final - total_desconto_final
 		total_mes_entrada = entrada_saida_service.calcula_total_entrada()
@@ -88,14 +80,15 @@ def listar_entrada_saida(request):
 		total_liquido_final = 0.00
 		
 		for entrada_saida in entradas_saidas:
-				total_bruto_final = total_bruto_final + float(entrada_saida.valor_entr_saida)
-				total_desconto_final = total_desconto_final + (float(entrada_saida.valor_entr_saida) * float(entrada_saida.tp_porcentagem)) / 100
+				total_bruto_final = total_bruto_final + entrada_saida.valor_entr_saida
+				if entrada_saida.tp_porcentagem != None:
+					total_desconto_final = total_desconto_final + (float(entrada_saida.valor_entr_saida) * ast.literal_eval(entrada_saida.tp_porcentagem)) / 100
 
-		total_liquido_final = + total_bruto_final - total_desconto_final
+		total_liquido_final = + float(total_bruto_final) - total_desconto_final
 		total_mes_entrada = entrada_saida_service.calcula_total_entrada()
 		total_mes_saida = entrada_saida_service.calcula_total_saida()
 		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas,
-																															 "total_bruto_final": round(total_bruto_final, 2),
+																															 "total_bruto_final": round(total_bruto_final,2),
 																															 "total_desconto_final": round(total_desconto_final, 2),
 																															 "total_liquido_final": round(total_liquido_final, 2),
 																															 "total_mes_entrada": round(total_mes_entrada, 2),
@@ -103,7 +96,7 @@ def listar_entrada_saida(request):
 																															 })
 
 def cadastrar_entrada_saida(request):
-
+	
 		context = {}
 		profissionais = profissional_service.listar_profissional()
 		especialidades = especialidades_service.listar_especialidade()
@@ -137,9 +130,17 @@ def cadastrar_entrada_saida(request):
 		return render(request, 'caixa/form_entrada_saida.html', {'form_entrada_saida': form_entrada_saida})  #, 'profissionais': profissionais,'especialidades': especialidades})
 																																																		
 def editar_entrada_saida(request, id):
-		entrada_saida_bd = entrada_saida_service.listar_entrada_saida_id(id)
+		
+		entrada_saida_bd = entrada_saida_service.listar_entrada_saida_id(id) # trago os dados da tabela que tem relação com o ID que estou passando
+		
+		id_fkprofissional = entrada_saida_bd.fkprofissional_id
+		especialidades_profissional = profissional_service.listar_especialidades_profissional(id_fkprofissional) # trago as especialidades do profissional
+		
+		especialidade = entrada_saida_bd.fkespecialidades # é a especialidade que foi gravado na tabela
+		
 		form_entrada_saida = EntradaSaidaForm(request.POST or None, instance=entrada_saida_bd)
 		if form_entrada_saida.is_valid():
+				# print(form_entrada_saida)
 				dt_movimentacao = form_entrada_saida.cleaned_data['dt_movimentacao']
 				profissional = form_entrada_saida.cleaned_data['profissional']
 				paciente = form_entrada_saida.cleaned_data['paciente']
@@ -159,7 +160,12 @@ def editar_entrada_saida(request, id):
 																							 observacao=observacao,motivo=motivo,fkprofissional=fkprofissional,fkespecialidades=fkespecialidades)
 				entrada_saida_service.editar_entrada_saida(entrada_saida_bd, entrada_saida_nova)
 				return redirect('listar_entrada_saida')
-		return render(request, 'caixa/form_entrada_saida.html', {'form_entrada_saida': form_entrada_saida})
+
+		# print('ddddddddddddddddddddddddd', form_entrada_saida)
+		return render(request, 'caixa/form_entrada_saida.html', {'form_entrada_saida': form_entrada_saida, # os dados que vem da tabela
+																														 'especialidade': especialidade,
+																														 'id_fkespecialidades': especialidades_profissional,
+																														 })
 		
 def remover_entrada_saida(request, id):
 		entrada_saida_bd = entrada_saida_service.listar_entrada_saida_id(id)
@@ -168,3 +174,8 @@ def remover_entrada_saida(request, id):
 				return redirect('listar_entrada_saida')
 		return render(request, 'caixa/confirma_exclusao.html', {'entrada_saida': entrada_saida_bd})
 
+
+
+# VIEWs CHARTs
+def charts(request):
+		return render(request, 'charts/charts.html')

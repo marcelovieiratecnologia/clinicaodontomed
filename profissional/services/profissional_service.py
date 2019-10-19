@@ -21,8 +21,10 @@ def listar_profissional():
 		
 def listar_profissional_id(id):
 		profissional = Profissionais.objects.get(id=id)
-		for i in profissional.especialidades.all():
-				print(i.especialidade)
+
+		# for i in profissional.especialidades.all():
+		# 		print(i.especialidade)
+
 		# print(connection.queries)
 		# print(len(connection.queries))
 		# print(profissional)
@@ -57,5 +59,3 @@ def editar_profissional(profissional, profissional_nova):
 		
 def remover_profissional(profissional_bd):
 		profissional_bd.delete()
-		
-		
