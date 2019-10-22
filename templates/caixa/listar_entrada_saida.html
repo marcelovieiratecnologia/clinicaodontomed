@@ -152,14 +152,18 @@
     </div>
 </div>
 <div class="row">
-    <div class="btn btn-outline-primary">
+<div class="btn btn-outline-primary">
         <a href="{% url 'cadastrar_entrada_saida' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Entrada Saida"></a>
 </div>
 
 {% block js %}
-<!--colocar aqui meu bloco js -->
-
 <script>
+<!-- Estou definindo o DataTable e mais algumas configurações no arquivo _scripts dentro de /templates/adminlte/_scripts.html   -->
+<!--    $(document).ready( function () {-->
+<!--        $('#myTableCaixa').DataTable(dsadsadsa);-->
+<!--    });-->
+
+
     $(function data() {
         $("#datepicker_filter").datepicker({
             format : 'dd/mm/yyyy',
@@ -174,6 +178,7 @@
             autoclose : true,
         })
     });
+
 
 
 <!-- Estava Usando para executar o evento do click do botão -->

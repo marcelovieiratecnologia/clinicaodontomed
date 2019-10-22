@@ -96,12 +96,26 @@ WSGI_APPLICATION = 'clinicaodontomed.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 # Configurações para o acesso a base do SqlLite
+# DATABASES = {
+# 		'default': {
+# 				'ENGINE': 'django.db.backends.sqlite3',
+# 				'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# 		}
+# }
+
+
 DATABASES = {
-		'default': {
-				'ENGINE': 'django.db.backends.sqlite3',
-				'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-		}
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'odontomed',
+        # 'NAME': os.path.join(BASE_DIR, 'mydb'),
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': '127.0.0.1',
+        'PORT': '', # 8000 is default
+    }
 }
+
 
 # TODO Acertar o projeto para que fique em uma base de dados MySQl
 # Configurações para acesso a Base do MySql
@@ -146,19 +160,23 @@ AUTH_PASSWORD_VALIDATORS = [
 # USE_TZ = False
 # USE_THOUSAND_SEPARATOR = True
 # DECIMAL_SEPARATOR = ','
+
 LANGUAGE_CODE = 'pt-br'
-USE_I18N = False
+TIME_ZONE = 'America/Sao_Paulo'
+USE_I18N = True
 USE_L10N = True
-DECIMAL_SEPARATOR = ','
-THOUSAND_SEPARATOR = '.'
+USE_TZ = True
 USE_THOUSAND_SEPARATOR = True
+# DECIMAL_SEPARATOR = ','
+# THOUSAND_SEPARATOR = '.'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 # STATIC_PATH = os.path.join(os.path.dirname(__file__), 'static')
-STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'staticfiles')
 STATIC_URL = '/static/'
 
 #definindo outros diretorios de arquivos estáticos
