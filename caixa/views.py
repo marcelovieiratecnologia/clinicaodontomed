@@ -31,7 +31,7 @@ def listar_entrada_saida_anomes(request):
 		total_liquido_final = 0.00
 		
 		for entrada_saida in entradas_saidas:
-				total_bruto_final = total_bruto_final + float(entrada_saida.valor_entr_saida)
+				total_bruto_final = float(total_bruto_final) + float(entrada_saida.valor_entr_saida)
 				if entrada_saida.tp_porcentagem != None:
 						total_desconto_final = total_desconto_final + (float(entrada_saida.valor_entr_saida) * float(entrada_saida.tp_porcentagem)) / 100
 		
@@ -57,7 +57,7 @@ def listar_entrada_saida_data(request):
 		total_liquido_final = 0.00
 		
 		for entrada_saida in entradas_saidas:
-				total_bruto_final = total_bruto_final + float(entrada_saida.valor_entr_saida)
+				total_bruto_final = float(total_bruto_final) + float(entrada_saida.valor_entr_saida)
 				total_desconto_final = total_desconto_final + (
 										float(entrada_saida.valor_entr_saida) * float(entrada_saida.tp_porcentagem)) / 100
 		
@@ -80,7 +80,7 @@ def listar_entrada_saida(request):
 		total_liquido_final = 0.00
 		
 		for entrada_saida in entradas_saidas:
-				total_bruto_final = total_bruto_final + entrada_saida.valor_entr_saida
+				total_bruto_final = float(total_bruto_final) + float(entrada_saida.valor_entr_saida)
 				if entrada_saida.tp_porcentagem != None:
 					total_desconto_final = total_desconto_final + (float(entrada_saida.valor_entr_saida) * ast.literal_eval(entrada_saida.tp_porcentagem)) / 100
 
