@@ -37,9 +37,10 @@ def cadastrar_profissional(profissional):
 																									 num_registro_classe=profissional.num_registro_classe,cidades=profissional.cidades,
 																									 orgao_emissor=profissional.orgao_emissor)
 		profissional_bd.save()
-		for i in profissional.especialidades:
-				# print(profissional.especialidades)
-				especialidade = especialidades_service.listar_especialidades_id()
+		for especialidade in profissional.especialidades:
+				# print(i)
+				# especialidade = especialidades_service.listar_especialidades_id()
+				
 				# print('esppppp:: ', especialidade)
 				# profissional = profissional_bd.nome_profissional
 				# print('Dados-Esp-Prof', especialidade, profissional)

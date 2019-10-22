@@ -25,7 +25,7 @@
                     <th>Reg Classe</th>
                     <th>Cidade</th>
                     <th>Org Emissor</th>
-                    <th>Especialidade</th>
+<!--                    <th>Especialidade</th>-->
                     <th>Especialidade(s)</th>
                     <th>Ações</th>
                 </tr>
@@ -39,7 +39,7 @@
                     <td>{{ profissional.num_registro_classe }}</td>
                     <td>{{ profissional.cidades }}</td>
                     <td>{{ profissional.orgao_emissor }}</td>
-                    <td>{{ profissional.especialidades }}</td>
+<!--                    <td>{{ profissional.especialidades }}</td>-->
                     <td>
                     {% for especialidade in profissional.especialidades.all %}
                         {{ especialidade.especialidade }}/
