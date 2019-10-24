@@ -8,6 +8,8 @@ from datetime import date, datetime
 import ast
 from decimal import *
 
+from .models import EntradaSaida
+import json
 
 def index(request):
 		return render_to_response()
@@ -175,7 +177,24 @@ def remover_entrada_saida(request, id):
 		return render(request, 'caixa/confirma_exclusao.html', {'entrada_saida': entrada_saida_bd})
 
 
-
 # VIEWs CHARTs
+# def charts(request, *args, **kwargs):
+# 		data = {
+# 				"sales":100,
+# 				"costumers": 10,
+# 		}
+# 		return render(request, 'charts/charts.html')
+
+
 def charts(request):
-		return render(request, 'charts/charts.html')
+		queryset = EntradaSaida.objects.all()
+		names = [obj.tp_entrada for obj in queryset]
+		prices = [int(obj.valor_entr_saida) for obj in queryset]
+		date = [str(obj.dt_movimentacao) for obj in queryset]
+		
+		context = {
+        'names': json.dumps(names),
+        'prices': json.dumps(prices),
+				'date': json.dumps(date)
+    }
+		return render(request, 'charts/charts.html', context)

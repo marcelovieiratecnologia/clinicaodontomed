@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from .views import *
 
+
 '''
 1- Rota que será envocada no link se deixar vazio no link sera apenas localhost:8000/caixa,
 2- Nome do Método DEF da minha VIEW ,

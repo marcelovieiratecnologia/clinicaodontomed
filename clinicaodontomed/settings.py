@@ -37,6 +37,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+		'chartjs',
 		# 'datatable',
 		#'django_adminlte_theme', template para meu admin, não estou usando no momento
 		'django_adminlte',
