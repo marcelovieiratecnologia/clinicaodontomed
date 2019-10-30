@@ -15,7 +15,7 @@ def index(request):
 		return render_to_response()
 
 def listar_especialidades_profissional(request):
-		id_fkprofissional = request.GET.get('id_fkprofissional') # vem do meu ajax
+		id_fkprofissional = request.GET.get('id_fkprofissional') # Vem do meu ajax
 		especialidades_profissional = profissional_service.listar_especialidades_profissional(id_fkprofissional)
 		context = {'especialidades_profissional': especialidades_profissional}
 		return  render(request, 'caixa/includes/_especialidadesprofissional.html', context)
@@ -26,7 +26,10 @@ def listar_entrada_saida_anomes(request):
 		ano = anomes[-4:] # pego o ano da string '09/2019'
 		mes = anomes[:-5] # pego o mes da string '09/2019'
 		
-		entradas_saidas = entrada_saida_service.listar_entrada_saida_anomes(ano, mes)
+		if (ano != '') and (mes != ''):
+				entradas_saidas = entrada_saida_service.listar_entrada_saida_anomes(ano, mes)
+		else:
+				entradas_saidas = entrada_saida_service.listar_entrada_saida()
 		
 		total_bruto_final = 0.00
 		total_desconto_final = 0.00
@@ -40,6 +43,7 @@ def listar_entrada_saida_anomes(request):
 		total_liquido_final = + total_bruto_final - total_desconto_final
 		total_mes_entrada = entrada_saida_service.calcula_total_entrada()
 		total_mes_saida = entrada_saida_service.calcula_total_saida()
+		
 		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas,
 																															 "total_bruto_final": round(total_bruto_final, 2),
 																															 "total_desconto_final": round(total_desconto_final, 2),
@@ -51,9 +55,14 @@ def listar_entrada_saida_anomes(request):
 def listar_entrada_saida_data(request):
 		
 		dt = request.GET.get('datepicker_filter')
-		data = datetime.strptime(dt, '%d/%m/%Y').date()
+	
+		if dt != '':
+				data = datetime.strptime(dt, '%d/%m/%Y').date()
+				entradas_saidas = entrada_saida_service.listar_entrada_saida_data(data)
+		else:
+				entradas_saidas = entrada_saida_service.listar_entrada_saida()
 		
-		entradas_saidas = entrada_saida_service.listar_entrada_saida_data(data)
+		
 		total_bruto_final = 0.00
 		total_desconto_final = 0.00
 		total_liquido_final = 0.00
@@ -66,6 +75,7 @@ def listar_entrada_saida_data(request):
 		total_liquido_final = + total_bruto_final - total_desconto_final
 		total_mes_entrada = entrada_saida_service.calcula_total_entrada()
 		total_mes_saida = entrada_saida_service.calcula_total_saida()
+		
 		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas,
 																															 "total_bruto_final": round(total_bruto_final, 2),
 																															 "total_desconto_final": round(total_desconto_final, 2),

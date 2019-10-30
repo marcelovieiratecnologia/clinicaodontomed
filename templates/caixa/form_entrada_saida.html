@@ -43,51 +43,39 @@
                 </div>
             </div>
             <div class="row">
-        <!--Vai ficar fora pq estou trazendo o COMBO BOX-->
-        <!--        <div class="form-group col-md-6">-->
-        <!--            {{ form_entrada_saida.profissional.erros }}-->
-        <!--            <label>Nome do Profissional: </label>-->
-        <!--                {{ form_entrada_saida.profissional|addclass:'form-control' }}-->
-        <!--        </div>-->
                 <div class="form-group col-md-6">
                     {{ form_entrada_saida.fkprofissional.erros }}
                     <label>Profissional: </label>
                         {{ form_entrada_saida.fkprofissional|addclass:'form-control' }}
                 </div>
-                <div class="form-group col-md-2">
-                    {{ form_entrada_saida.fkespecialidades.erros }}
-                    <label>Especialidade: </label>
-                        {{ form_entrada_saida.fkespecialidades|addclass:'form-control' }}
-                </div>
 
 
+                <!--ESPECIALIDADES -->
 <!--                <div class="form-group col-md-2">-->
 <!--                    {{ form_entrada_saida.fkespecialidades.erros }}-->
 <!--                    <label>Especialidade: </label>-->
-<!--                        {{ fkespecialidades }}-->
+<!--                        {{ form_entrada_saida.fkespecialidades|addclass:'form-control' }}-->
 <!--                </div>-->
 
-                    <div class="form-group col-md-4">
-                        {{ form_entrada_saida.fkespecialidades.erros }}
-                        <label for="fkespecialidades">Especialidades:</label>
-                        <select id="fkespecialidades" name="fkespecialidades" class="form-control">
 
-<!--                            {% if especialidade  %}-->
-<!--                                <option value="{{ especialidade.pk }}">{{ especialidade }}</option> &lt;!&ndash; Nesse IF Carrego o combo com a especialidade que foi salva no banco &ndash;&gt;-->
-<!--                            {% else %}-->
-<!--                                <option>Primeiro escolha o Profissional</option>  &lt;!&ndash; Se por algum motivo esta vindo sem especialidade traz o texto dizendo para escolher &ndash;&gt;-->
-<!--                            {% endif %}-->
+                <div class="form-group col-md-4">
+                    {{ form_entrada_saida.fkespecialidades.erros }}
+                    <label>Especialidades:</label>
+                    <select id="id_fkespecialidades" name="fkespecialidades" class="form-control">
 
-<!--                            {% for especialidade in id_fkespecialidades %}-->
-<!--                            <option value="{{ especialidade.pk }}">{{ especialidade }}</option> &lt;!&ndash; Esse FOR vai preencher o combo com as especialidades relacionadas com o profissional &ndash;&gt;-->
-<!--                            {% endfor %}-->
+                        {% if especialidade  %}
+                            <option value="{{ especialidade.pk }}">{{ especialidade }}</option> <!-- Nesse IF Carrego o combo com a especialidade que foi salva no banco -->
+                        {% else %}
+                            <option>Primeiro escolha o Profissional</option>  <!-- Se por algum motivo esta vindo sem especialidade traz o texto dizendo para escolher -->
+                        {% endif %}
 
-                            {% for especialidade in id_fkespecialidades %}
-                            <option value="{{ especialidade.pk }}">{{ especialidade }}</option> <!-- Esse FOR vai preencher o combo com as especialidades relacionadas com o profissional -->
-                            {% endfor %}
+                        {% for especialidade in id_fkespecialidades %}
+                        <option value="{{ especialidade.pk }}">{{ especialidade }}</option> <!-- Esse FOR vai preencher o combo com as especialidades relacionadas com o profissional -->
+                        {% endfor %}
 
-                        </select>
-                    </div>
+
+                    </select>
+                </div>
 
             </div>
 
@@ -152,58 +140,15 @@
     </div>
 </div>
 
-<!--  Teste Com o Atriibuto sendo passado na contrução do form , deu certo , porém tiver que deixar o form como POST e usar o AJAX com GET para não atrapalhar  -->
-<!--            <form id="myFormSelect"-->
-<!--                  method="GET"-->
-<!--                  class="form-inline"-->
-<!--                  data-url="{% url 'listar_especialidades_profissional' %}"-->
-<!--            >-->
-<!--                    <div class="row">-->
-
-<!--                        <div class="form-group col-md-4" style="padding:10px;">-->
-<!--                            <label for="idprofissional">Profissionais Select</label>-->
-<!--                            <select id="idprofissional" class="form-control">-->
-<!--                                <option {% for profissional in form_entrada_saida.fkprofissional %}> {{ profissional }} </option>-->
-<!--                                {% endfor %}-->
-
-<!--                            </select>-->
-<!--                        </div>-->
-
-<!--                        <div class="form-group col-md-4" style="padding:10px;">-->
-<!--                            <label for="idespecialidadeselect">Especialidades Select</label>-->
-<!--                            <select id="idespecialidadeselect" class="form-control">-->
-<!--                                <option>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-
-<!--                    </div>-->
-
-<!--            </form>-->
-
 
 {% block js %}
 <script>
 
-<!--/*Estava usando com o atribuito URL no form, porem estava tendo problemas , fiz outro abaixo passando a URL no AJAX-->
-<!--    $("#idprofissional").change(function(){-->
-<!--        let url = $('#myFormSelect').data('url');-->
-<!--        let idprofissional  = $(this).val();-->
-<!--        $.ajax({-->
-<!--            url: url,-->
-<!--            data: {-->
-<!--                idprofissional: idprofissional-->
-<!--            },-->
-<!--            success: function(response){-->
-<!--                $('#idespecialidadeselect').html(response);-->
-<!--            }-->
-<!--        });-->
-<!--    });*/-->
-
+/*
 $(document).ready(function(){
-        let id_fkprofissional = $(this).val();
-        var btn = document.getElementById("id_fkprofissional");
-        console.log('ola')
-        console.log(btn)
+        console.log($("#id_fkprofissional option:selected" ).val());
+        let id_fkprofissional = $("#id_fkprofissional option:selected" ).val();
+        console.log(id_fkprofissional)
         $.ajax({
             url: "{% url 'listar_especialidades_profissional' %}",
             type: 'GET',
@@ -211,11 +156,11 @@ $(document).ready(function(){
                 id_fkprofissional: id_fkprofissional
             },
             success: function(response){
-            console.log(response)
                 $('#id_fkespecialidades').html(response)
             }
         })
 });
+*/
 
     $('#id_fkprofissional').change(function(){
         let id_fkprofissional = $(this).val();

@@ -158,11 +158,12 @@
 
 {% block js %}
 <script>
-<!-- Estou definindo o DataTable e mais algumas configurações no arquivo _scripts dentro de /templates/adminlte/_scripts.html   -->
-<!--    $(document).ready( function () {-->
-<!--        $('#myTableCaixa').DataTable(dsadsadsa);-->
-<!--    });-->
-
+/*
+ Estou definindo o DataTable e mais algumas configurações no arquivo _scripts dentro de /templates/adminlte/_scripts.html
+    $(document).ready( function () {
+        $('#myTableCaixa').DataTable(dsadsadsa);
+    });
+*/
 
     $(function data() {
         $("#datepicker_filter").datepicker({
@@ -180,15 +181,15 @@
     });
 
 
-
-<!-- Estava Usando para executar o evento do click do botão -->
-<!--    $("#btndata").on('click', function(env){-->
-<!--        env.preventDefault();-->
-<!--        var dt = $("#datepicker_filter").val();-->
-<!--        var url = "{% url 'listar_entrada_saida_data' %}";-->
-<!--        window.location.assign(url);-->
-<!--    });-->
-
+/*
+ Estava Usando para executar o evento do click do botão
+    $("#btndata").on('click', function(env){
+        env.preventDefault();
+        var dt = $("#datepicker_filter").val();
+        var url = "{% url 'listar_entrada_saida_data' %}";
+        window.location.assign(url);
+    });
+*/
 </script>
 
 {% endblock js %}

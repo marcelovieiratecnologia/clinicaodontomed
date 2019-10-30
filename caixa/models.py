@@ -55,7 +55,7 @@ class EntradaSaida(models.Model):
 		tp_convenio = models.CharField(verbose_name='Tipos de Convênios', max_length=30, choices=TP_CONVENIO, blank=True, null=True)
 		tp_pagamento = models.CharField(verbose_name='Tipos de Pagamentos', max_length=30, choices=TP_PAGAMENTO, blank=True, null=True)
 		tp_credito = models.CharField(verbose_name='Tipos de Créditos', max_length=20, choices=TP_CREDITO, blank=True, null=True)
-		tp_porcentagem = models.CharField(verbose_name='Tipos de Porcentagens', max_length=10, choices=TP_PORCENTAGEM, blank=True, null=True)
+		tp_porcentagem = models.CharField(verbose_name='Tipos de Porcentagens', max_length=10, choices=TP_PORCENTAGEM, default=0.00, blank=True, null=True)
 		observacao = models.TextField(verbose_name='Observação',blank=True)
 		motivo = models.CharField(verbose_name='Motivo da Entrada/Saída', max_length=150, blank=True)
 		fkprofissional = models.ForeignKey('profissional.Profissionais',verbose_name='Profissional',related_name='qry_profissionais', on_delete=models.CASCADE)
