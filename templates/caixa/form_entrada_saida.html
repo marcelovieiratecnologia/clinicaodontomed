@@ -54,11 +54,11 @@
                     <label>Profissional: </label>
                         {{ form_entrada_saida.fkprofissional|addclass:'form-control' }}
                 </div>
-<!--                <div class="form-group col-md-2">-->
-<!--                    {{ form_entrada_saida.fkespecialidades.erros }}-->
-<!--                    <label>Especialidade: </label>-->
-<!--                        {{ form_entrada_saida.fkespecialidades|addclass:'form-control' }}-->
-<!--                </div>-->
+                <div class="form-group col-md-2">
+                    {{ form_entrada_saida.fkespecialidades.erros }}
+                    <label>Especialidade: </label>
+                        {{ form_entrada_saida.fkespecialidades|addclass:'form-control' }}
+                </div>
 
 
 <!--                <div class="form-group col-md-2">-->
@@ -73,7 +73,7 @@
                         <select id="fkespecialidades" name="fkespecialidades" class="form-control">
 
 <!--                            {% if especialidade  %}-->
-                                <option value="{{ especialidade.pk }}">{{ especialidade }}</option> <!-- Nesse IF Carrego o combo com a especialidade que foi salva no banco -->
+<!--                                <option value="{{ especialidade.pk }}">{{ especialidade }}</option> &lt;!&ndash; Nesse IF Carrego o combo com a especialidade que foi salva no banco &ndash;&gt;-->
 <!--                            {% else %}-->
 <!--                                <option>Primeiro escolha o Profissional</option>  &lt;!&ndash; Se por algum motivo esta vindo sem especialidade traz o texto dizendo para escolher &ndash;&gt;-->
 <!--                            {% endif %}-->
@@ -184,7 +184,7 @@
 {% block js %}
 <script>
 
-<!--Estava usando com o atribuito URL no form, porem estava tendo problemas , fiz outro abaixo passando a URL no AJAX-->
+<!--/*Estava usando com o atribuito URL no form, porem estava tendo problemas , fiz outro abaixo passando a URL no AJAX-->
 <!--    $("#idprofissional").change(function(){-->
 <!--        let url = $('#myFormSelect').data('url');-->
 <!--        let idprofissional  = $(this).val();-->
@@ -197,8 +197,25 @@
 <!--                $('#idespecialidadeselect').html(response);-->
 <!--            }-->
 <!--        });-->
-<!--    });-->
+<!--    });*/-->
 
+$(document).ready(function(){
+        let id_fkprofissional = $(this).val();
+        var btn = document.getElementById("id_fkprofissional");
+        console.log('ola')
+        console.log(btn)
+        $.ajax({
+            url: "{% url 'listar_especialidades_profissional' %}",
+            type: 'GET',
+            data: {
+                id_fkprofissional: id_fkprofissional
+            },
+            success: function(response){
+            console.log(response)
+                $('#id_fkespecialidades').html(response)
+            }
+        })
+});
 
     $('#id_fkprofissional').change(function(){
         let id_fkprofissional = $(this).val();
@@ -209,7 +226,8 @@
                 id_fkprofissional: id_fkprofissional
             },
             success: function(response){
-                $('#fkespecialidades').html(response)
+            console.log(response)
+                $('#id_fkespecialidades').html(response)
             }
         })
     });

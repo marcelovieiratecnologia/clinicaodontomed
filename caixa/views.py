@@ -89,6 +89,7 @@ def listar_entrada_saida(request):
 		total_liquido_final = + float(total_bruto_final) - total_desconto_final
 		total_mes_entrada = entrada_saida_service.calcula_total_entrada()
 		total_mes_saida = entrada_saida_service.calcula_total_saida()
+		
 		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas,
 																															 "total_bruto_final": round(total_bruto_final,2),
 																															 "total_desconto_final": round(total_desconto_final, 2),
@@ -189,12 +190,21 @@ def remover_entrada_saida(request, id):
 def charts(request):
 		queryset = EntradaSaida.objects.all()
 		names = [obj.tp_entrada for obj in queryset]
+		
 		prices = [int(obj.valor_entr_saida) for obj in queryset]
 		date = [str(obj.dt_movimentacao) for obj in queryset]
+		for dt in date:
+				print(type(dt))
+				data = datetime.strptime(dt, '%d/%m/%Y').date()
 		
+		print('ddddddddddddddddddddddd',type(date[:][0]))
+		# print('fffffffffffffffffffffffff', data)
 		context = {
         'names': json.dumps(names),
         'prices': json.dumps(prices),
-				'date': json.dumps(date)
+				'date': json.dumps(date),
+				'choice_colours': ['rgba(0, 209, 178, 0.55)'] * len(date),
+				'choice_border_colours': ['rgba(0, 209, 178, 0.9)'] * len(date),
     }
+		print(context)
 		return render(request, 'charts/charts.html', context)

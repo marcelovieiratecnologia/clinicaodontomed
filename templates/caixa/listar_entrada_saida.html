@@ -109,12 +109,12 @@
                             <td>{{ entrada_saida.tp_entrada }}</td>
                             <td>{{ entrada_saida.dt_movimentacao }}</td>
                             <td>{{ entrada_saida.fkprofissional }}</td>
-                            <td>{{ entrada_saida.fkespecialidades }}</td>
+                            <td>{{ entrada_saida.fkespecialidades|default_if_none:"" }}</td>
                             <td>{{ entrada_saida.paciente }}</td>
                             <td>{{ entrada_saida.motivo }}</td>
-                            <td>{{ entrada_saida.tp_convenio }}</td>
-                            <td>{{ entrada_saida.tp_pagamento }}</td>
-                            <td>{{ entrada_saida.tp_credito }}</td>
+                            <td>{{ entrada_saida.tp_convenio|default_if_none:"" }}</td>
+                            <td>{{ entrada_saida.tp_pagamento|default_if_none:"" }}</td>
+                            <td>{{ entrada_saida.tp_credito|default_if_none:"" }}</td>
                             <td>{{ entrada_saida.valor }}</td>
                             <td>{{ entrada_saida.desconto }}</td>
                             <td>{{ entrada_saida.total }}</td>
