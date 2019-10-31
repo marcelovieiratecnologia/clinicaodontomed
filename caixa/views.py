@@ -69,7 +69,8 @@ def listar_entrada_saida_data(request):
 		
 		for entrada_saida in entradas_saidas:
 				total_bruto_final = float(total_bruto_final) + float(entrada_saida.valor_entr_saida)
-				total_desconto_final = total_desconto_final + (
+				if entrada_saida.tp_porcentagem != None:
+						total_desconto_final = total_desconto_final + (
 										float(entrada_saida.valor_entr_saida) * float(entrada_saida.tp_porcentagem)) / 100
 		
 		total_liquido_final = + total_bruto_final - total_desconto_final
@@ -203,9 +204,11 @@ def charts(request):
 		
 		prices = [int(obj.valor_entr_saida) for obj in queryset]
 		date = [str(obj.dt_movimentacao) for obj in queryset]
-		for dt in date:
-				print(type(dt))
-				data = datetime.strptime(dt, '%d/%m/%Y').date()
+		
+		# for dt in date:
+		# 		print(type(dt))
+		# 		data = datetime.strptime(dt, '%d/%m/%Y').date()
+				
 		
 		print('ddddddddddddddddddddddd',type(date[:][0]))
 		# print('fffffffffffffffffffffffff', data)

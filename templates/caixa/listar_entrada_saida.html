@@ -180,8 +180,27 @@
         })
     });
 
+    /* Valida Campo Pesq Data Especifica */
+    $("#btndata").on('click', function(){
+        var dt = $("#datepicker_filter").val();
+           if (dt == '') {
+                alert('Preencher a Data Específica para Pesquisar')
+                return;
+            }
+    });
 
-/*
+
+    /* Valida Campo Pesq Mes Ano*/
+    $("#btndatames").on('click', function(){
+        var dt = $("#datepicker_month_filter").val();
+           if (dt == '') {
+                alert('Preencher a Data Mes/Ano para Pesquisar')
+                return;
+            }
+    });
+
+
+/* Fora de Uso
  Estava Usando para executar o evento do click do botão
     $("#btndata").on('click', function(env){
         env.preventDefault();
