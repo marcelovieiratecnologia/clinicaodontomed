@@ -10,6 +10,7 @@ from decimal import *
 
 from .models import EntradaSaida
 import json
+from django.db.models import Sum, Aggregate, Avg
 
 def index(request):
 		return render_to_response()
@@ -197,27 +198,87 @@ def remover_entrada_saida(request, id):
 # 		}
 # 		return render(request, 'charts/charts.html')
 
-
+# todo: a data do mychart do charts.html, esta saindo com a data dos labels assim: 2010-10-10 tem que sair assim para facil leitura 10/10/2010
 def charts(request):
+		dtm = datetime.now()
 		queryset = EntradaSaida.objects.all()
-		names = [obj.tp_entrada for obj in queryset]
 		
+		print('======================',queryset)
+		
+		# For construido de uma forma mais limpa
+		names = [obj.tp_entrada for obj in queryset] # if obj != None
 		prices = [int(obj.valor_entr_saida) for obj in queryset]
+		
+		# Usando List Comprehension
+		# pricesmonth = [int(obj.valor_entr_saida) for obj in queryset ]
+		
+		
 		date = [str(obj.dt_movimentacao) for obj in queryset]
+		data=[]
+		mes=[]
+		for dt in date:
+				data.append(datetime.strptime(dt, '%Y-%m-%d').strftime('%d/%m/%Y')) # minha lista com os DIAS
+				mes.append(datetime.strptime(dt, '%Y-%m-%d').strftime('%m')) # minha lista com os MES
 		
-		# for dt in date:
-		# 		print(type(dt))
-		# 		data = datetime.strptime(dt, '%d/%m/%Y').date()
+		# Para o MyCharts2
+		pr_entradas_saidas = []
+		vlr_ent_saida  = 0
+		cont = 1
+		while cont <= 12:
+				vlr_ent_saida = EntradaSaida.objects.filter(dt_movimentacao__year=dtm.year,dt_movimentacao__month=cont).aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+				if vlr_ent_saida != None:
+						pr_entradas_saidas.append(int(vlr_ent_saida))
+				else:
+						pr_entradas_saidas.append(0)
+				cont += 1
+		
+		# Esse parte fiz para o MyChats3 todo: melhor isso esta muito noob
+		pr_entradas = []
+		pr_saidas = []
+		vlr_ent = 0
+		vlr_sai = 0
+		
+		cont = 1 # Contador de 1 a 12 que equivale aos meses, isso faz que meus valores fiquem posicionados corretamente em seu respectivo mês
+		while cont <= 12:
+				vlr_ent = EntradaSaida.objects.filter(tp_entrada='ENTRADA', dt_movimentacao__year=dtm.year,dt_movimentacao__month=cont).aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+				vlr_sai = EntradaSaida.objects.filter(tp_entrada='SAIDA', dt_movimentacao__year=dtm.year,dt_movimentacao__month=cont).aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+				if vlr_ent != None:
+						pr_entradas.append(int(vlr_ent))
+				else:
+						pr_entradas.append(0) # gravo 0 para que corresponda ao mes que ainda é zero, se ficar nome o mês não aparece
+
+				if vlr_sai != None:
+						pr_saidas.append(int(vlr_sai))
+				else:
+						pr_saidas.append(0) # gravo 0 para que corresponda ao mes que ainda é zero, se ficar nome o mês não aparece
+				cont += 1
 				
-		
-		print('ddddddddddddddddddddddd',type(date[:][0]))
-		# print('fffffffffffffffffffffffff', data)
 		context = {
         'names': json.dumps(names),
         'prices': json.dumps(prices),
-				'date': json.dumps(date),
+				'date': json.dumps(data),
+				'mes': json.dumps(mes),
+				'pr_entradas': json.dumps(pr_entradas),
+				'pr_saidas':json.dumps(pr_saidas),
+				'pr_entradas_saidas': json.dumps(pr_entradas_saidas),
 				'choice_colours': ['rgba(0, 209, 178, 0.55)'] * len(date),
 				'choice_border_colours': ['rgba(0, 209, 178, 0.9)'] * len(date),
     }
-		print(context)
+		# print(context)
 		return render(request, 'charts/charts.html', context)
+
+
+# todo: fazer o charts que mostra entradas + saidas juntos por mês , no charts.html , é i MyChart2
+# def chartsMes(request):
+# 		queryset = EntradaSaida.objects.all()
+#
+# 		date = [str(obj.dt_movimentacao) for obj in queryset]
+# 		context = ''
+# 		return render(request, 'charts/charts.html', context)
+#
+# todo: fazer o charts que mostra entradas e saidas separadas por mês , no charts.html , é i MyChart3
+# def chartsMesEntradasSaidas(request):
+# 		queryset = EntradaSaida.objects.all()
+#
+# 		return render(request, 'charts/charts.html')
+		
