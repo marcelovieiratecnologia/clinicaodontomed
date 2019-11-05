@@ -42,23 +42,25 @@
         <!--        <div class="pull-left col-md-10">-->
         <!--            <h1 class="box-title">Filtros</h1>-->
         <!--        </div>-->
+
                 <div class="form-group">
                     <div class="col-md-3">
                         <form action="{% url 'listar_entrada_saida_data' %}" method="GET">
                             <div class="input-group">
-                                <div class="input-group-addon input-group margin">
+                                <div class="input-group-addon input-group margin" id="datepicker_filter">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                    <input type="text" placeholder="Pesquisa por Data Específica" class="form-control" id="datepicker_filter" name="datepicker_filter" readonly>
-                                    <span class="input-group-btn">
+                                    <input type="text" placeholder="Pesquisa por Data Específica" class="form-control" id="datepicker_filter" name="datepicker_filter"
+                                           data-toggle='#datepicker_filter1' readonly>
+
+                                    <div class="input-group-btn">
                                         <button class="btn btn-info" id="btndata" type="submit">
                                             <i class="fa fa-search"></i>
                                         </button>
-                                    </span>
+                                    </div>
                             </div>
                         </form>
                     </div>
-
                     <div class="col-md-3">
                         <form action="{% url 'listar_entrada_saida_anomes' %}" method="GET">
                             <div class="input-group">

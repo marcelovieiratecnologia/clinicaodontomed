@@ -18,6 +18,8 @@
 <!--DataPicker-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+<!--Translation-->
+<!-- todo: Colocar o arquivo do CDN da tradução dos datatables e não usar o link direto  -->
 
 <!-- charts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
@@ -26,6 +28,9 @@
 <script>
     $(document).ready( function () {
         $('#myTableCaixa').DataTable({
+            "language": {
+              "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+            },
             responsive: true,
             columnDefs: [
                 { className: "text-right", responsivePriority: 9, targets: [ 9 ] },
@@ -36,6 +41,9 @@
         });
 
         $('#myTableGenerics').DataTable({
+            "language": {
+              "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+            },
             responsive: true,
             columnDefs: [
                 { responsivePriority: -1,targets: -1 }
