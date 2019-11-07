@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, render_to_response
-from .forms import EntradaSaidaForm
+from .forms import EntradaSaidaForm, RawEntradaSaidaForm
 from .entidades.entrada_saida import Entrada_Saida
 from .services import entrada_saida_service
 from profissional.services import profissional_service
