@@ -1,14 +1,15 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect,render_to_response
 from ..forms.especialidade_forms import EspecialidadesForm
 from ..entidades.especialidade import Especialidade
 from ..services import especialidades_service
 
-# Create your views here.
-
+@login_required()
 def listar_especialidade(request):
 		especialidades = especialidades_service.listar_especialidade()
 		return render(request, 'especialidade/listar_especialidade.html', {'especialidades': especialidades})
 
+@login_required()
 def cadastrar_especialidade(request):
 		if request.method == "POST":
 				form_especialidade = EspecialidadesForm(request.POST)
@@ -21,7 +22,7 @@ def cadastrar_especialidade(request):
 				form_especialidade = EspecialidadesForm()
 				return render(request, 'especialidade/form_especialidade.html', {'form_especialidade': form_especialidade})
 
-
+@login_required()
 def editar_especialidade(request, id):
 		especialidade_bd = especialidades_service.listar_especialidades_id(id)
 		form_especialidade = EspecialidadesForm(request.POST or None, instance=especialidade_bd)
@@ -32,14 +33,13 @@ def editar_especialidade(request, id):
 				return redirect('listar_especialidade')
 		return render(request, 'especialidade/form_especialidade.html', {'form_especialidade': form_especialidade})
 
-
+@login_required()
 def remover_especialidade(request,id):
 		especialidade_bd = especialidades_service.listar_especialidades_id(id)
 		if request.method=="POST":
 				especialidades_service.remover_especialidade(especialidade_bd)
 				return redirect('listar_especialidade')
 		return render(request, 'especialidade/confirma_exclusao.html', {'especialidade': especialidade_bd})
-
 
 
 # # @@@@@@@@@ Cidade @@@@@@@@@

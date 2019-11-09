@@ -1,17 +1,19 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect,render_to_response
 from ..forms.profissional_forms import ProfissionaisForm
 from ..entidades.profissonal import *
 from ..services import profissional_service
-# Create your views here.
 
+@login_required()
 def index(request):
 		return render_to_response()
 
-# @@@@@@@@@ Profissional @@@@@@@@@
+@login_required()
 def listar_profissional(request):
 		profissionais = profissional_service.listar_profissional()
 		return render(request, 'profissional/listar_profissional.html', {'profissionais': profissionais})
 
+@login_required()
 def cadastrar_profissional(request):
 		if request.method == "POST":
 				form_profissional = ProfissionaisForm(request.POST)
@@ -31,7 +33,7 @@ def cadastrar_profissional(request):
 				form_profissional = ProfissionaisForm()
 				return render(request, 'profissional/form_profissional.html', {'form_profissional': form_profissional})
 
-
+@login_required()
 def editar_profissional(request, id):
 		profissional_antigo = profissional_service.listar_profissional_id(id)
 		form_profissional = ProfissionaisForm(request.POST or None, instance=profissional_antigo)
@@ -48,11 +50,10 @@ def editar_profissional(request, id):
 				return redirect('listar_profissional')
 		return render(request, 'profissional/form_profissional.html', {'form_profissional': form_profissional})
 
+@login_required()
 def remover_profissional(request,id):
 		profissional_bd = profissional_service.listar_profissional_id(id)
 		if request.method=="POST":
 				profissional_service.remover_profissional(profissional_bd)
 				return redirect('listar_profissional')
 		return render(request, 'profissional/confirma_exclusao.html', {'profissional': profissional_bd})
-
-

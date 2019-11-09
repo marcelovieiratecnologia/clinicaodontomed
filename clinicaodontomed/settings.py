@@ -178,6 +178,8 @@ USE_THOUSAND_SEPARATOR = True
 # STATIC_PATH = os.path.join(os.path.dirname(__file__), 'static')
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+
+
 STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'staticfiles')
 STATIC_URL = '/static/'
 
@@ -185,5 +187,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
 		os.path.join(BASE_DIR, 'static'),
 )
+
+LOGIN_URL = 'index' # com isso mudo a pagina padrão de login do Django e sempre que resquisitar um novo login ele manda para esse página que fiz , que serve como Home inicial e Logar usuário
 
 django_heroku.settings(locals()) # determina , realiza todas as configurações no HEROKU automaticamente

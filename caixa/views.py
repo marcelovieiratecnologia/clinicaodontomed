@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, render_to_response
 from .forms import EntradaSaidaForm, RawEntradaSaidaForm
 from .entidades.entrada_saida import Entrada_Saida
@@ -12,15 +13,18 @@ from .models import EntradaSaida
 import json
 from django.db.models import Sum, Aggregate, Avg
 
+@login_required()
 def index(request):
 		return render_to_response()
 
+@login_required()
 def listar_especialidades_profissional(request):
 		id_fkprofissional = request.GET.get('id_fkprofissional') # Vem do meu ajax
 		especialidades_profissional = profissional_service.listar_especialidades_profissional(id_fkprofissional)
 		context = {'especialidades_profissional': especialidades_profissional}
 		return  render(request, 'caixa/includes/_especialidadesprofissional.html', context)
 
+@login_required()
 def listar_entrada_saida_anomes(request):
 		
 		anomes = request.GET.get('datepicker_month_filter')
@@ -52,7 +56,7 @@ def listar_entrada_saida_anomes(request):
 																															 "total_mes_entrada": round(total_mes_entrada, 2),
 																															 "total_mes_saida": round(total_mes_saida, 2),
 																															 })
-
+@login_required()
 def listar_entrada_saida_data(request):
 		
 		dt = request.GET.get('datepicker_filter')
@@ -85,7 +89,7 @@ def listar_entrada_saida_data(request):
 																															 "total_mes_entrada": round(total_mes_entrada, 2),
 																															 "total_mes_saida": round(total_mes_saida, 2),
 																															 })
-
+@login_required()
 def listar_entrada_saida(request):
 		
 		entradas_saidas = entrada_saida_service.listar_entrada_saida()
@@ -110,6 +114,7 @@ def listar_entrada_saida(request):
 																															 "total_mes_saida": round(total_mes_saida, 2),
 																															 })
 
+@login_required()
 def cadastrar_entrada_saida(request):
 	
 		context = {}
@@ -143,7 +148,8 @@ def cadastrar_entrada_saida(request):
 		else:
 				form_entrada_saida = EntradaSaidaForm()
 		return render(request, 'caixa/form_entrada_saida.html', {'form_entrada_saida': form_entrada_saida})  #, 'profissionais': profissionais,'especialidades': especialidades})
-																																																		
+
+@login_required()
 def editar_entrada_saida(request, id):
 		
 		entrada_saida_bd = entrada_saida_service.listar_entrada_saida_id(id) # trago os dados da tabela que tem relação com o ID que estou passando
@@ -176,12 +182,11 @@ def editar_entrada_saida(request, id):
 				entrada_saida_service.editar_entrada_saida(entrada_saida_bd, entrada_saida_nova)
 				return redirect('listar_entrada_saida')
 
-		# print('ddddddddddddddddddddddddd', form_entrada_saida)
 		return render(request, 'caixa/form_entrada_saida.html', {'form_entrada_saida': form_entrada_saida, # os dados que vem da tabela
 																														 'especialidade': especialidade,
 																														 'id_fkespecialidades': especialidades_profissional,
 																														 })
-		
+@login_required()
 def remover_entrada_saida(request, id):
 		entrada_saida_bd = entrada_saida_service.listar_entrada_saida_id(id)
 		if request.method == "POST":
@@ -199,6 +204,7 @@ def remover_entrada_saida(request, id):
 # 		return render(request, 'charts/charts.html')
 
 # todo: a data do mychart do charts.html, esta saindo com a data dos labels assim: 2010-10-10 tem que sair assim para facil leitura 10/10/2010
+@login_required()
 def charts(request):
 		dtm = datetime.now()
 		queryset = EntradaSaida.objects.all()

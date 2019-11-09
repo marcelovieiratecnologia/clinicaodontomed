@@ -1,6 +1,6 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
+{% load static %}
 
 <head>
   <meta charset="utf-8">
@@ -13,11 +13,7 @@
   <!-- CSS dependencies -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="aquamarine.css" type="text/css">
-  <!-- Script: Make my navbar transparent when the document is scrolled to top -->
-  <script src="js/navbar-ontop.js"></script>
-  <!-- Script: Animated entrance -->
-  <script src="js/animate-in.js"></script>
-  <!--<link rel="stylesheet" href="style.css">-->
+
   <link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}">
   <!-- CSS sendo usado no trecho do código do form que peguei do ADMIN
   <link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}">
@@ -31,45 +27,26 @@
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar3SupportedContent" aria-controls="navbar3SupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
       <div class="collapse navbar-collapse text-center justify-content-center" id="navbar3SupportedContent">
         <ul class="navbar-nav">
-          <li class="nav-item mx-3">
-            <a class="nav-link text-light" href="#"><b>Clínica OdontoMed</b></a>
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="http://www.amil.com.br/credenciado-dental/#/" target="blank"><b>Amil</b></a>
           </li>
           <li class="nav-item mx-2">
-            <a class="nav-link" href="#menu"><b>Bradesco</b></a>
+            <a class="nav-link" href="https://www.redeunna.com.br/dentista/login.do?method=InicializaTela" target="blank"><b>RedUnna</b></a>
           </li>
           <li class="nav-item mx-2">
-            <a class="nav-link" href="#venue"><b>OdontoPrev<br></b></a>
+            <a class="nav-link" href="http://www.sulamerica.com.br/" target="blank"><b>SulAmerica<br></b></a>
           </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="https://www.gndi.com.br/" target="blank"><b>GNDI<br></b></a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="https://www.inpao.com.br/credenciados2018/area-gto/plano-de-tratamento/" target="blank"><b>Inpao<br></b></a>
+          </li>
+
         </ul>
       </div>
     </div>
   </nav>
-  <!-- Cover -->
- <!-- Backup do Codigo
-  <div class="align-items-center d-flex cover section-aquamarine py-5" style="background-image: url();">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-7 align-self-center text-lg-left text-center">
-          <h1 class="mb-0 mt-5 display-4">Clínica OdontoMed</h1>
-          <p class="mb-5">Seu espaço de sorriso e saúde.</p>
-        </div>
-        <div class="col-lg-5 p-3">
-          <form class="p-4 bg-light" method="post" action="https://formspree.io/">
-            <h4 class="mb-4 text-center">Acessar Sistema</h4>
-            <div class="form-group"> <label>Login</label>
-              <input class="form-control" placeholder="Seu Usuário">
-            </div>
-            <div class="form-group"> <label>Senha</label>
-              <div class="form-group"><input class="form-control" placeholder="Sua Senha"></div>
-            </div>
-            <button type="submit" class="btn mt-4 btn-block p-2 btn-primary"><b>Entrar</b>
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  -->
 
   <div class="align-items-center d-flex cover section-aquamarine py-5" style="background-image: url();">
     <div class="container">
@@ -79,33 +56,34 @@
           <p class="mb-5">Seu espaço de sorriso e saúde.</p>
         </div>
         <div class="col-lg-5 p-3">
-          <!--<form class="p-4 bg-light" method="post" action="https://formspree.io/">-->
-          <form class="p-4 bg-light" action="{% url 'charts' %}" method="post" id="login-form"><input type="hidden" name="csrfmiddlewaretoken" value="0Dk2wteuIb8g9KtmUhGKCD9j5UzeJaaey1Jrm1ijWgXWHqO550tynBAujDbRSFbs">{% csrf_token %}
-            <h4 class="mb-4 text-center">Acessar Sistema</h4>
+          <form class="p-4 bg-light"
+                method="POST">
+
+            {% csrf_token %}
+
+            {% for message in messages %}
+              <div class="alert alert-danger">
+                  {{ message }}
+              </div>
+            {% endfor %}
+
+            <h4 class="mb-4 text-center">Acessar o Sistema</h4>
             <!-- Campo Login -->
-            <div class="required form-group" for="id_username"> <label>Login</label>
-              <input class="form-control" placeholder="Seu Usuário" type="text" name="username" autofocus="" id="id_username">
+            <div class="required form-group">
+              <label>Usuário:</label>
+              <!--<input class="form-control" placeholder="Seu Usuário" name="username" autofocus="" id="username">-->
+                {{ form_login.username }}
             </div>
-            <!--<label class="required" for="id_username">Usuário:</label> <input type="text" name="username" autofocus="" required="" id="id_username">-->
             <!-- Campo Senha -->
-            <div class="required form-group" for="id_password"> <label>Senha</label>
-              <div class="form-group"><input class="form-control" placeholder="Sua Senha" type="password" name="password" id="id_password"></div>
-              <input type="hidden" name="next" value="/admin/">
+            <div class="required form-group" for="id_username">
+              <label>Senha:</label>
+              <!--<input class="form-control" placeholder="Sua Senha" name="password" autofocus="" id="password">-->
+                {{ form_login.password }}
             </div>
-            <!--
-            <label class="required" for="id_password">Senha:</label> <input type="password" name="password" required="" id="id_password">
-            <input type="hidden" name="next" value="/admin/">
-            -->
+
             <!-- Botão Acessar -->
-            <button type="submit" class="btn mt-4 btn-block p-2 btn-primary"><b>Entrar</b></button>
+            <button type="submit" value="Entrar" class="btn mt-4 btn-block p-2 btn-primary"><b>Entrar</b></button>
 
-<!--              <a href="{% url 'charts' %}"><button class="btn mt-2 btn-block p-4 btn-primary"><b>Acesso Simples</b></button></a>-->
-
-            <!--
-            <div class="submit-row">
-              <label>&nbsp;</label><input type="submit" value="Acessar">
-            </div>
-            -->
           </form>
         </div>
       </div>
@@ -114,55 +92,14 @@
 
 </body>
 
-
-<!-- INICIO @@@@ peguei esse trecho admin para me conectar pela Home direto para a área administrativa
-<body class=" login" data-admin-utc-offset="-10800">
-  <div id="container">
-      <div id="header">
-          <div id="branding">
-            <h1 id="site-name"><a href="/admin/">Login Sistema</a></h1>
-      </div>
-  </div>
-    <div id="content" class="colM">
-    <div id="content-main">
-    <form action="/admin/login/?next=/admin/" method="post" id="login-form"><input type="hidden" name="csrfmiddlewaretoken" value="0Dk2wteuIb8g9KtmUhGKCD9j5UzeJaaey1Jrm1ijWgXWHqO550tynBAujDbRSFbs">
-      <div class="form-row">
-           <label class="required" for="id_username">Usuário:</label> <input type="text" name="username" autofocus="" required="" id="id_username">
-      </div>
-      <div class="form-row">
-        <label class="required" for="id_password">Senha:</label> <input type="password" name="password" required="" id="id_password">
-        <input type="hidden" name="next" value="/admin/">
-      </div>
-      <div class="submit-row">
-        <label>&nbsp;</label><input type="submit" value="Acessar">
-      </div>
-    </form>
-    </div>
-        <br class="clear">
-    </div>
-    <div id="footer"></div>
-    <div id="extwaiimpotscp" style="display:none" v="{e3d1" f="ZTJVelpERXdOREJrTFdWaE1XVXRORE16TnkxaU5URmlMVGxtTXpVek9ERTNNVGcwWm4wPQ==" q="e1bee03b" c="170.0" i="186.0" u="0.245" s="19060320" w="false" m="BMe=" vn="0trpt"></div></div>
--->
-
-<!-- FIM  @@@@ Trecho que peguei do form ADMIN -->
-
-
 <body>
-  <!-- Intro -->
-  <!-- Gallery -->
-  <!-- Menu -->
-  <!-- Carousel reviews -->
-  <!-- Carousel venue -->
-  <!-- Events -->
-  <!-- Parallax section -->
-  <!-- Footer -->
   <div class="text-center bg-dark pt-5">
     <div class="container">
       <div class="row">
         <div class="col-md-4 p-3">
           <h2 class="mb-4">Contato</h2>
           <p class="m-0">
-            <a href="tel:+246 - 542 550 5462" class="text-white">+246 - 542 550 5462</a>
+            <a href="tel:+246 - 542 550 5462" class="text-white">(19)  3217 - 7579</a>
           </p>
           <p>odontomed<a href="mailto:info@pingendo.com" class="text-white">@gmail.com</a>
           </p>
@@ -170,7 +107,7 @@
         <div class="col-md-4 p-3">
           <h2 class="mb-4">Endereço</h2>
           <p>
-            <a href="https://www.google.it/maps" target="blank" class="text-white">23 Fake Street <br>Seattle, WA 00000</a>
+            <a href="https://www.google.it/maps" target="blank" class="text-white">R. Salomão Hadade Baruque, 53<br>Centro, Monte Mor - SP</a>
           </p>
         </div>
         <div class="col-md-4 p-3">
@@ -180,7 +117,7 @@
       </div>
       <div class="row">
         <div class="col-md-12 mt-3">
-          <p class="text-center text-muted">© Copyright 2018 Pingendo - All rights reserved. </p>
+          <p class="text-center text-muted">© Copyright 2019 MVT - All rights reserved. </p>
         </div>
       </div>
     </div>
@@ -190,7 +127,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous" style=""></script>
   <!-- Script: Smooth scrolling between anchors in the same page -->
-  <script src="js/smooth-scroll.js"></script>
+<!--  <script src="js/smooth-scroll.js"></script>-->
   <pingendo onclick="#" style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">Marcelo Vieira Tecnologia&nbsp;&nbsp;<img src="/static/home/img/LogoMVT.png" class="d-block" alt="MVT logo" height="32"></pingendo>
 </body>
 

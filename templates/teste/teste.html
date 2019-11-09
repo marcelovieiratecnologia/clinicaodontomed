@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Template de Teste</title>
@@ -21,5 +21,32 @@
     <p> - templates/teste/teste.html</p>
     <p> </p>
 
+{% block content %}
+          <form class="p-4 bg-light"
+                action="{% url 'logar_usuario' %}"
+                method="POST">
+
+            {% csrf_token %}
+
+            {% for message in messages %}
+              <div class="alert alert-danger">
+                  {{ message }}
+              </div>
+            {% endfor %}
+
+            <h4 class="mb-4 text-center">Acessar Sistema</h4>
+            <!-- Campo Login -->
+            <div class="required form-group"> <label>Login</label>
+              <input class="form-control" placeholder="Seu Usuário" name="username" autofocus="" id="username">
+            </div>
+            <!-- Campo Senha -->
+            <div class="required form-group" for="id_username"> <label>Senha</label>
+              <input class="form-control" placeholder="Sua Senha" name="password" autofocus="" id="password">
+            </div>
+          </form>
+
+
+          <a href="{% url 'logar_usuario' %}"><input type="button" class="btn btn-primary mb3" value="Entrar"></a>
+{% endblock %}
 </body>
 </html>
