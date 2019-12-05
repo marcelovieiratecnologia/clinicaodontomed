@@ -15,17 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [ # onde aponto meu APP/diretorio/template e suas URLS que vai ser lida qdo eu digitar no browser
     path('admin/', admin.site.urls), # página do admin
     path('', include('home.urls')), # pág principal
     path('home/', include('home.urls')), # além da Pág Principal Aqui tenho a rota para o localhost:8000/teste ; localhost:8000/marcelo ...
-    #path('home/', include('django.contrib.auth.urls')),
     path('caixa/', include('caixa.urls')),
     path('profissional/', include('profissional.urls')),
-    #path('account/', include('django.contrib.auth.urls')),
-]
+    path('usuario/', include('usuario.urls')),
+] #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # optei pelo IF abaixo
 
+if settings.DEBUG:
+    #para funcionar os arquivos estaticos em DEBUG (Images, css, javascript, etc .)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

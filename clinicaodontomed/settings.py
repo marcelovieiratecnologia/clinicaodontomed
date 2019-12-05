@@ -33,13 +33,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
+		'usuario',
 		'chartjs',
-		# 'datatable',
-		#'django_adminlte_theme', template para meu admin, não estou usando no momento
 		'django_adminlte',
 		'home',
 		'caixa',
@@ -51,7 +49,6 @@ INSTALLED_APPS = [
 		'django.contrib.messages',
 		'django.contrib.staticfiles',
 		'django_extensions',
-		#'joinfield',
 ]
 
 MIDDLEWARE = [
@@ -93,31 +90,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'clinicaodontomed.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 # Configurações para o acesso a base do SqlLite
-# DATABASES = {
-# 		'default': {
-# 				'ENGINE': 'django.db.backends.sqlite3',
-# 				'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-# 		}
-# }
-
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'odontomed',
-        # 'NAME': os.path.join(BASE_DIR, 'mydb'),
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': '127.0.0.1',
-        'PORT': '', # 8000 is default
-    }
+		'default': {
+				'ENGINE': 'django.db.backends.sqlite3',
+				'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+		}
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'odontomed',
+#         # 'NAME': os.path.join(BASE_DIR, 'mydb'),
+#         'USER': 'postgres',
+#         'PASSWORD': '1234',
+#         'HOST': '127.0.0.1',
+#         'PORT': '', # 8000 is default
+#     }
+# }
 
 # TODO Acertar o projeto para que fique em uma base de dados MySQl
 # Configurações para acesso a Base do MySql
@@ -151,7 +145,6 @@ AUTH_PASSWORD_VALIDATORS = [
 		},
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -174,19 +167,24 @@ USE_THOUSAND_SEPARATOR = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
 # STATIC_PATH = os.path.join(os.path.dirname(__file__), 'static')
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-
-
 STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'staticfiles')
 STATIC_URL = '/static/'
+
+
+MEDIA_ROOT = (
+		os.path.join(BASE_DIR, 'media')
+)
+MEDIA_URL = '/media/'
+
 
 #definindo outros diretorios de arquivos estáticos
 STATICFILES_DIRS = (
 		os.path.join(BASE_DIR, 'static'),
 )
+
 
 LOGIN_URL = 'index' # com isso mudo a pagina padrão de login do Django e sempre que resquisitar um novo login ele manda para esse página que fiz , que serve como Home inicial e Logar usuário
 
