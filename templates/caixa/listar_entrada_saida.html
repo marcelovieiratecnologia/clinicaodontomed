@@ -90,8 +90,8 @@
                 <table id="myTableCaixa" class="table table-bordered table-hover" cellpadding="5" width="100%">
                     <thead>
                         <tr>
-                            <th>Entr/Saída</th>
                             <th>Data</th>
+                            <th>Entr/Saída</th>
                             <th>Profissional</th>
                             <th>Especialidade</th>
                             <th>Paciente</th>
@@ -108,8 +108,8 @@
                     <tbody>
                     {% for entrada_saida in entradas_saidas %}
                         <tr>
-                            <td>{{ entrada_saida.tp_entrada }}</td>
                             <td>{{ entrada_saida.dt_movimentacao }}</td>
+                            <td>{{ entrada_saida.tp_entrada }}</td>
                             <td>{{ entrada_saida.fkprofissional }}</td>
                             <td>{{ entrada_saida.fkespecialidades|default_if_none:"" }}</td>
                             <td>{{ entrada_saida.paciente }}</td>
@@ -132,6 +132,23 @@
                     {% endfor %}
                     </tbody>
                         <tfoot>
+                                <!--  Esse primtio TR estou fazendo como se fosse um Header do Foot abaixo      -->
+                                <tr style="background-color:#4682B4">
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>Entrada + Saida </th>
+                                <th>Tot Descontos </th>
+                                <th>Ent+Saida - Desc</th>
+                                <th></th>
+                            </tr>
+
                             <tr style="background-color:#d3d3d3">
                                 <th>TOTAL GERAL</th>
                                 <th></th>
@@ -157,6 +174,8 @@
 <div class="btn btn-outline-primary">
         <a href="{% url 'cadastrar_entrada_saida' %}"><input type="button" class="btn btn-primary mb3" value="Cadastrar Entrada Saida"></a>
 </div>
+<br>
+<br>
 
 {% block js %}
 <script>

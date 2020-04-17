@@ -30,7 +30,7 @@ def listar_entrada_saida_anomes(request):
 		anomes = request.GET.get('datepicker_month_filter')
 		ano = anomes[-4:] # pego o ano da string '09/2019'
 		mes = anomes[:-5] # pego o mes da string '09/2019'
-		
+
 		if (ano != '') and (mes != ''):
 				entradas_saidas = entrada_saida_service.listar_entrada_saida_anomes(ano, mes)
 		else:
@@ -50,12 +50,12 @@ def listar_entrada_saida_anomes(request):
 		total_mes_saida = entrada_saida_service.calcula_total_saida()
 		
 		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas,
-																															 "total_bruto_final": round(total_bruto_final, 2),
-																															 "total_desconto_final": round(total_desconto_final, 2),
-																															 "total_liquido_final": round(total_liquido_final, 2),
-																															 "total_mes_entrada": round(total_mes_entrada, 2),
-																															 "total_mes_saida": round(total_mes_saida, 2),
-																															 })
+																	"total_bruto_final": round(total_bruto_final, 2),
+																	"total_desconto_final": round(total_desconto_final, 2),
+																	"total_liquido_final": round(total_liquido_final, 2),
+																	"total_mes_entrada": round(total_mes_entrada, 2),
+																	"total_mes_saida": round(total_mes_saida, 2),
+																	})
 @login_required()
 def listar_entrada_saida_data(request):
 		
@@ -66,8 +66,7 @@ def listar_entrada_saida_data(request):
 				entradas_saidas = entrada_saida_service.listar_entrada_saida_data(data)
 		else:
 				entradas_saidas = entrada_saida_service.listar_entrada_saida()
-		
-		
+
 		total_bruto_final = 0.00
 		total_desconto_final = 0.00
 		total_liquido_final = 0.00
@@ -83,12 +82,12 @@ def listar_entrada_saida_data(request):
 		total_mes_saida = entrada_saida_service.calcula_total_saida()
 		
 		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas,
-																															 "total_bruto_final": round(total_bruto_final, 2),
-																															 "total_desconto_final": round(total_desconto_final, 2),
-																															 "total_liquido_final": round(total_liquido_final, 2),
-																															 "total_mes_entrada": round(total_mes_entrada, 2),
-																															 "total_mes_saida": round(total_mes_saida, 2),
-																															 })
+																	"total_bruto_final": round(total_bruto_final, 2),
+																	"total_desconto_final": round(total_desconto_final, 2),
+																	"total_liquido_final": round(total_liquido_final, 2),
+																	"total_mes_entrada": round(total_mes_entrada, 2),
+																	"total_mes_saida": round(total_mes_saida, 2),
+																	})
 @login_required()
 def listar_entrada_saida(request):
 		
@@ -107,12 +106,12 @@ def listar_entrada_saida(request):
 		total_mes_saida = entrada_saida_service.calcula_total_saida()
 		
 		return render(request, 'caixa/listar_entrada_saida.html', {"entradas_saidas": entradas_saidas,
-																															 "total_bruto_final": round(total_bruto_final,2),
-																															 "total_desconto_final": round(total_desconto_final, 2),
-																															 "total_liquido_final": round(total_liquido_final, 2),
-																															 "total_mes_entrada": round(total_mes_entrada, 2),
-																															 "total_mes_saida": round(total_mes_saida, 2),
-																															 })
+																	"total_bruto_final": round(total_bruto_final,2),
+																	"total_desconto_final": round(total_desconto_final, 2),
+																	"total_liquido_final": round(total_liquido_final, 2),
+																	"total_mes_entrada": round(total_mes_entrada, 2),
+																	"total_mes_saida": round(total_mes_saida, 2),
+																	})
 
 @login_required()
 def cadastrar_entrada_saida(request):
@@ -183,9 +182,9 @@ def editar_entrada_saida(request, id):
 				return redirect('listar_entrada_saida')
 
 		return render(request, 'caixa/form_entrada_saida.html', {'form_entrada_saida': form_entrada_saida, # os dados que vem da tabela
-																														 'especialidade': especialidade,
-																														 'id_fkespecialidades': especialidades_profissional,
-																														 })
+																 'especialidade': especialidade,
+																'id_fkespecialidades': especialidades_profissional,
+																})
 @login_required()
 def remover_entrada_saida(request, id):
 		entrada_saida_bd = entrada_saida_service.listar_entrada_saida_id(id)

@@ -94,24 +94,24 @@ WSGI_APPLICATION = 'clinicaodontomed.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 # Configurações para o acesso a base do SqlLite
-DATABASES = {
-		'default': {
-				'ENGINE': 'django.db.backends.sqlite3',
-				'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-		}
-}
-
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'odontomed',
-#         # 'NAME': os.path.join(BASE_DIR, 'mydb'),
-#         'USER': 'postgres',
-#         'PASSWORD': '1234',
-#         'HOST': '127.0.0.1',
-#         'PORT': '', # 8000 is default
-#     }
+# 		'default': {
+# 				'ENGINE': 'django.db.backends.sqlite3',
+# 				'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# 		}
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'OdontoMed',
+        # 'NAME': os.path.join(BASE_DIR, 'mydb'),
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': '127.0.0.1',
+        'PORT': '', # 8000 is default
+    }
+}
 
 # TODO Acertar o projeto para que fique em uma base de dados MySQl
 # Configurações para acesso a Base do MySql

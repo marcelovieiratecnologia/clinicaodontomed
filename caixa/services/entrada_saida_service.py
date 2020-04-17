@@ -13,30 +13,34 @@ def listar_entrada_saida_data(data): # Listo sempre o mes corrente
 		return EntradaSaida.objects.filter(dt_movimentacao=data)
 
 def listar_entrada_saida_anomes(ano,mes):
-		return EntradaSaida.objects.filter(dt_movimentacao__year=ano).filter(dt_movimentacao__month=mes)
+		sql = EntradaSaida.objects.filter(dt_movimentacao__year=ano).filter(dt_movimentacao__month=mes)
+		# sql = EntradaSaida.objects.raw("select * from tb_om_entrada_saida toes left join tb_om_profissionais_especialidades pe on pe.especialidades_id = toes.fkespecialidades_id and pe.profissionais_id = toes.fkespecialidades_id where extract(year from toes.dt_movimentacao ) = 2019 order by toes.id desc ")
+		# index = 0
+		# for s in sql:
+		# 	index += 1
+		# 	print('---- ', str(index) , ' : ' , s)
+		return sql
 		
 def listar_entrada_saida_id(id):
-		
 		entrada_saida_id = EntradaSaida.objects.get(id=id)
-		
 		# especialidade = Entrada.objects.get
 		# print('ssssssssssssssss', entrada_saida_id.fkespecialidades)
 		return entrada_saida_id
 
 def cadastrar_entrada_saida(entrada_saida):
 		entrada_saida_bd = EntradaSaida.objects.create(dt_movimentacao=entrada_saida.dt_movimentacao,
-																									 profissional=entrada_saida.profissional,
-																									 paciente=entrada_saida.paciente,
-																									 qt_parcelas=entrada_saida.qt_parcelas,
-																									 valor_entr_saida=entrada_saida.valor_entr_saida,
-																									 tp_entrada=entrada_saida.tp_entrada,
-																									 tp_convenio=entrada_saida.tp_convenio,
-																									 tp_pagamento=entrada_saida.tp_pagamento,
-																									 tp_credito=entrada_saida.tp_credito,
-																									 tp_porcentagem=entrada_saida.tp_porcentagem,
-																									 observacao=entrada_saida.observacao, motivo=entrada_saida.motivo,
-																									 fkprofissional=entrada_saida.fkprofissional,
-																									 fkespecialidades=entrada_saida.fkespecialidades)
+														profissional=entrada_saida.profissional,
+														paciente=entrada_saida.paciente,
+														qt_parcelas=entrada_saida.qt_parcelas,
+														valor_entr_saida=entrada_saida.valor_entr_saida,
+														tp_entrada=entrada_saida.tp_entrada,
+														tp_convenio=entrada_saida.tp_convenio,
+														tp_pagamento=entrada_saida.tp_pagamento,
+														tp_credito=entrada_saida.tp_credito,
+														tp_porcentagem=entrada_saida.tp_porcentagem,
+														observacao=entrada_saida.observacao, motivo=entrada_saida.motivo,
+														fkprofissional=entrada_saida.fkprofissional,
+														fkespecialidades=entrada_saida.fkespecialidades)
 		entrada_saida_bd.save()
 
 def editar_entrada_saida(entrada_saida_bd, entrada_saida_nova):
