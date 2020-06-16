@@ -12,7 +12,7 @@
 
 <div class="box box-success">
     <div class="box-header with-border">
-      <h3 class="box-title">Entradas e Saidas</h3>
+      <h3 class="box-title">SOMENTE AS ENTRADAS </h3>
 
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -73,14 +73,19 @@
 var ctx = document.getElementById("myChart");
 var names = JSON.parse('{{ names|safe }}');
 var prices = JSON.parse('{{ prices|safe }}');
-var date = JSON.parse('{{ date|safe }}')
+var date = JSON.parse('{{ date|safe }}');
+var pr_entradas = JSON.parse('{{ pr_entradas|safe }}')
+var entradas = JSON.parse('{{ entradas|safe }}')
+var dtEntradas = JSON.parse('{{ dtEntradas|safe }}')
+
+
 var productsChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: date,
+        labels: dtEntradas,
         datasets: [{
-            label: 'Caixa',
-            data: prices,
+            label: 'Entradas do Caixa',
+            data: entradas,
             <!--backgroundColor: {{ choice_colours|safe }},-->
             borderColor: {{ choice_border_colours|safe }},
             borderWidth: 3

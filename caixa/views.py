@@ -6,6 +6,7 @@ from .services import entrada_saida_service
 from profissional.services import profissional_service
 from profissional.services import especialidades_service
 from datetime import date, datetime
+from django.db.models import Count, Sum
 import ast
 from decimal import *
 
@@ -206,9 +207,10 @@ def remover_entrada_saida(request, id):
 @login_required()
 def charts(request):
 		dtm = datetime.now()
+		# print('vvvvvvvvvvvvvv',dtm.day)
 		queryset = EntradaSaida.objects.all()
 		
-		print('======================',queryset)
+		# print('======================',queryset)
 		
 		# For construido de uma forma mais limpa
 		names = [obj.tp_entrada for obj in queryset] # if obj != None
@@ -219,6 +221,7 @@ def charts(request):
 		
 		
 		date = [str(obj.dt_movimentacao) for obj in queryset]
+		# print('date', date)
 		data=[]
 		mes=[]
 		for dt in date:
@@ -237,34 +240,73 @@ def charts(request):
 						pr_entradas_saidas.append(0)
 				cont += 1
 		
-		# Esse parte fiz para o MyChats3 todo: melhor isso esta muito noob
+		# Esse parte fiz para o MyChats3 todo: fazer melhor isso esta muito noob
 		pr_entradas = []
 		pr_saidas = []
+		entradas = []
+		dtEntradas = []
 		vlr_ent = 0
 		vlr_sai = 0
-		
-		cont = 1 # Contador de 1 a 12 que equivale aos meses, isso faz que meus valores fiquem posicionados corretamente em seu respectivo mês
-		while cont <= 12:
-				vlr_ent = EntradaSaida.objects.filter(tp_entrada='ENTRADA', dt_movimentacao__year=dtm.year,dt_movimentacao__month=cont).aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
-				vlr_sai = EntradaSaida.objects.filter(tp_entrada='SAIDA', dt_movimentacao__year=dtm.year,dt_movimentacao__month=cont).aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
-				if vlr_ent != None:
-						pr_entradas.append(int(vlr_ent))
-				else:
-						pr_entradas.append(0) # gravo 0 para que corresponda ao mes que ainda é zero, se ficar nome o mês não aparece
 
-				if vlr_sai != None:
-						pr_saidas.append(int(vlr_sai))
-				else:
-						pr_saidas.append(0) # gravo 0 para que corresponda ao mes que ainda é zero, se ficar nome o mês não aparece
-				cont += 1
-				
+		#  .... Começo MEXENDO
+		# print('comexuuuuuu', data)
+
+		# entrada02 = EntradaSaida.objects.filter(tp_entrada="Entrada", dt_movimentacao__year="2020",dt_movimentacao__month="04", dt_movimentacao__day='02').aggregate(Sum('valor_entr_saida'))
+		# entrada03 = EntradaSaida.objects.filter(tp_entrada="Entrada", dt_movimentacao__year="2020", dt_movimentacao__month="04", dt_movimentacao__day='03').aggregate(Sum('valor_entr_saida'))
+		# entrada04 = EntradaSaida.objects.filter(tp_entrada="Entrada", dt_movimentacao__year="2020", dt_movimentacao__month="04", dt_movimentacao__day='04').aggregate(Sum('valor_entr_saida'))
+		# print(entrada02) # dia 02
+		# print(entrada03) # dia 03
+		# print(entrada04)  # dia 04
+		xentradas = EntradaSaida.objects.filter(tp_entrada="Entrada").values('tp_entrada','dt_movimentacao').order_by('dt_movimentacao').annotate(total=Sum('valor_entr_saida'))
+		# print(xentradas)
+		for ent in xentradas:
+			entradas.append(int(ent['total']))
+
+		for ent in xentradas:
+		 	# dtEntradas.append(ent['dt_movimentacao'])
+			dd = ent['dt_movimentacao']
+			dd = dd.strftime("%d/%m/%Y")
+			dtEntradas.append(dd)
+		# print('entradaaaaaaaaaa', entrada)
+		# if entrada == "Entrada":
+		# 	if vlr_ent != None:
+		# 			pr_entradas.append(int(vlr_ent))
+		# 	else:
+		# 			pr_entradas.append(0) # gravo 0 para que corresponda ao mes que ainda é zero, se ficar nome o mês não aparece
+		# if vlr_sai != None:
+		# 		pr_saidas.append(int(vlr_sai))
+		# else:
+		# 		pr_saidas.append(0) # gravo 0 para que corresponda ao mes que ainda é zero, se ficar nome o mês não aparece
+
+		#  ....final MEXENDO
+
+
+		# @@@@@  ORIGINAL @@@@@@
+		# cont = 1 # Contador de 1 a 12 que equivale aos meses, isso faz que meus valores fiquem posicionados corretamente em seu respectivo mês
+		# while cont <= 12:
+		# 		vlr_ent = EntradaSaida.objects.filter(tp_entrada='Entrada', dt_movimentacao__year=dtm.year,dt_movimentacao__month=cont).aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+		# 		vlr_sai = EntradaSaida.objects.filter(tp_entrada='Saida', dt_movimentacao__year=dtm.year,dt_movimentacao__month=cont).aggregate(Sum('valor_entr_saida')).get('valor_entr_saida__sum')
+		# 		if vlr_ent != None:
+		# 				pr_entradas.append(int(vlr_ent))
+		# 		else:
+		# 				pr_entradas.append(0) # gravo 0 para que corresponda ao mes que ainda é zero, se ficar nome o mês não aparece
+		# 		if vlr_sai != None:
+		# 				pr_saidas.append(int(vlr_sai))
+		# 		else:
+		# 				pr_saidas.append(0) # gravo 0 para que corresponda ao mes que ainda é zero, se ficar nome o mês não aparece
+		# 		cont += 1
+		# @@@@ FINAL ORIGINAL
+
+		# print('entradasssss', pr_entradas)
 		context = {
         'names': json.dumps(names),
         'prices': json.dumps(prices),
 				'date': json.dumps(data),
 				'mes': json.dumps(mes),
 				'pr_entradas': json.dumps(pr_entradas),
-				'pr_saidas':json.dumps(pr_saidas),
+				'pr_saidas': json.dumps(pr_saidas),
+				'entradas': json.dumps(entradas),
+				'dtEntradas': json.dumps(dtEntradas),
 				'pr_entradas_saidas': json.dumps(pr_entradas_saidas),
 				'choice_colours': ['rgba(0, 209, 178, 0.55)'] * len(date),
 				'choice_border_colours': ['rgba(0, 209, 178, 0.9)'] * len(date),
