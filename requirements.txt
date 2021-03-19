@@ -3,7 +3,7 @@ colorama==0.4.1
 datatable==0.9.0
 dj-database-url==0.5.0
 dj-static==0.0.6
-Django==2.2.3
+Django==2.2.18
 django-adminlte2==0.4.1
 django-chartjs==1.5.0
 django-extensions==2.2.1
